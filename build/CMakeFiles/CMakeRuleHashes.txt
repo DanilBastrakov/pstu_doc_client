@@ -1,0 +1,3 @@
+# Hashes of file build rules.
+00420e928ee351739e06c1eb91f55e38 CMakeFiles/pstu_doc_client_autogen
+7c16bb62e900b716e22952200ef9aacb pstu_doc_client_autogen/timestamp

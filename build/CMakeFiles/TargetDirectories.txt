@@ -1,0 +1,5 @@
+/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/pstu_doc_client.dir
+/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/edit_cache.dir
+/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/rebuild_cache.dir
+/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/pstu_doc_client_autogen_timestamp_deps.dir
+/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/pstu_doc_client_autogen.dir
