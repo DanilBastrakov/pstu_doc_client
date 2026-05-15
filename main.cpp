@@ -29,7 +29,6 @@ int main(int argc, char *argv[]) {
     sidebarLayout->addWidget(historyList);
 
     splitter->addWidget(sidebar);
-
     auto *mainArea = new QWidget();
     auto *mainLayout = new QVBoxLayout(mainArea);
     mainLayout->setContentsMargins(0, 0, 0, 0);
