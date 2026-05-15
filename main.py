@@ -3,7 +3,6 @@ import numpy as np
 import ollama
 from pypdf import PdfReader  # optional, remove if PDF not needed
 
-# ---------- Document loader ----------
 def load_documents(folder_path: str):
     documents = []
     for filename in os.listdir(folder_path):
@@ -18,7 +17,6 @@ def load_documents(folder_path: str):
             documents.append({"text": text, "source": filename})
     return documents
 
-# ---------- Simple chunker ----------
 def chunk_text(text: str, chunk_size: int = 300, overlap: int = 50) -> list[str]:
     words = text.split()
     chunks = []
@@ -30,7 +28,6 @@ def chunk_text(text: str, chunk_size: int = 300, overlap: int = 50) -> list[str]
         start += (chunk_size - overlap)
     return chunks
 
-# ---------- Index ----------
 INDEX = []
 
 def build_index(folder="./my_docs", chunk_size=300, overlap=50, embed_model="nomic-embed-text"):
