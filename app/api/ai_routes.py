@@ -20,7 +20,6 @@ async def generate(prompt: str, model: str = "llama3", language: str = "russian"
 @router.get("/models")
 async def models():
     try:
-
         return await ai_service.list_models()
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
