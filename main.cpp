@@ -34,6 +34,8 @@ int main(int argc, char *argv[]) {
     auto *mainLayout = new QVBoxLayout(mainArea);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
+
+
     auto *scrollArea = new QScrollArea();
     scrollArea->setWidgetResizable(true);
     auto *messagesWidget = new QWidget();
