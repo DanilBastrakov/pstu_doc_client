@@ -162,6 +162,54 @@ pstu_doc_client_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client_autogen.dir/build.make CMakeFiles/pstu_doc_client_autogen.dir/build
 .PHONY : pstu_doc_client_autogen/fast
 
+authdialog.o: authdialog.cpp.o
+.PHONY : authdialog.o
+
+# target to build an object file
+authdialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o
+.PHONY : authdialog.cpp.o
+
+authdialog.i: authdialog.cpp.i
+.PHONY : authdialog.i
+
+# target to preprocess a source file
+authdialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/authdialog.cpp.i
+.PHONY : authdialog.cpp.i
+
+authdialog.s: authdialog.cpp.s
+.PHONY : authdialog.s
+
+# target to generate assembly for a file
+authdialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/authdialog.cpp.s
+.PHONY : authdialog.cpp.s
+
+collapsiblepanel.o: collapsiblepanel.cpp.o
+.PHONY : collapsiblepanel.o
+
+# target to build an object file
+collapsiblepanel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o
+.PHONY : collapsiblepanel.cpp.o
+
+collapsiblepanel.i: collapsiblepanel.cpp.i
+.PHONY : collapsiblepanel.i
+
+# target to preprocess a source file
+collapsiblepanel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.i
+.PHONY : collapsiblepanel.cpp.i
+
+collapsiblepanel.s: collapsiblepanel.cpp.s
+.PHONY : collapsiblepanel.s
+
+# target to generate assembly for a file
+collapsiblepanel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.s
+.PHONY : collapsiblepanel.cpp.s
+
 main.o: main.cpp.o
 .PHONY : main.o
 
@@ -185,6 +233,54 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+mainwindow.o: mainwindow.cpp.o
+.PHONY : mainwindow.o
+
+# target to build an object file
+mainwindow.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o
+.PHONY : mainwindow.cpp.o
+
+mainwindow.i: mainwindow.cpp.i
+.PHONY : mainwindow.i
+
+# target to preprocess a source file
+mainwindow.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.i
+.PHONY : mainwindow.cpp.i
+
+mainwindow.s: mainwindow.cpp.s
+.PHONY : mainwindow.s
+
+# target to generate assembly for a file
+mainwindow.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.s
+.PHONY : mainwindow.cpp.s
+
+persondialog.o: persondialog.cpp.o
+.PHONY : persondialog.o
+
+# target to build an object file
+persondialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o
+.PHONY : persondialog.cpp.o
+
+persondialog.i: persondialog.cpp.i
+.PHONY : persondialog.i
+
+# target to preprocess a source file
+persondialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/persondialog.cpp.i
+.PHONY : persondialog.cpp.i
+
+persondialog.s: persondialog.cpp.s
+.PHONY : persondialog.s
+
+# target to generate assembly for a file
+persondialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/persondialog.cpp.s
+.PHONY : persondialog.cpp.s
 
 pstu_doc_client_autogen/mocs_compilation.o: pstu_doc_client_autogen/mocs_compilation.cpp.o
 .PHONY : pstu_doc_client_autogen/mocs_compilation.o
@@ -210,6 +306,30 @@ pstu_doc_client_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.s
 .PHONY : pstu_doc_client_autogen/mocs_compilation.cpp.s
 
+sharedialog.o: sharedialog.cpp.o
+.PHONY : sharedialog.o
+
+# target to build an object file
+sharedialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o
+.PHONY : sharedialog.cpp.o
+
+sharedialog.i: sharedialog.cpp.i
+.PHONY : sharedialog.i
+
+# target to preprocess a source file
+sharedialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.i
+.PHONY : sharedialog.cpp.i
+
+sharedialog.s: sharedialog.cpp.s
+.PHONY : sharedialog.s
+
+# target to generate assembly for a file
+sharedialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.s
+.PHONY : sharedialog.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -222,12 +342,27 @@ help:
 	@echo "... pstu_doc_client_autogen"
 	@echo "... pstu_doc_client_autogen_timestamp_deps"
 	@echo "... pstu_doc_client"
+	@echo "... authdialog.o"
+	@echo "... authdialog.i"
+	@echo "... authdialog.s"
+	@echo "... collapsiblepanel.o"
+	@echo "... collapsiblepanel.i"
+	@echo "... collapsiblepanel.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... mainwindow.o"
+	@echo "... mainwindow.i"
+	@echo "... mainwindow.s"
+	@echo "... persondialog.o"
+	@echo "... persondialog.i"
+	@echo "... persondialog.s"
 	@echo "... pstu_doc_client_autogen/mocs_compilation.o"
 	@echo "... pstu_doc_client_autogen/mocs_compilation.i"
 	@echo "... pstu_doc_client_autogen/mocs_compilation.s"
+	@echo "... sharedialog.o"
+	@echo "... sharedialog.i"
+	@echo "... sharedialog.s"
 .PHONY : help
 
 

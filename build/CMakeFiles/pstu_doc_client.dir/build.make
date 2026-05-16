@@ -100,23 +100,104 @@ CMakeFiles/pstu_doc_client.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pstu_doc_client.dir/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/admin-debian/CLionProjects/pstu_doc_client/main.cpp -o CMakeFiles/pstu_doc_client.dir/main.cpp.s
 
+CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o: CMakeFiles/pstu_doc_client.dir/flags.make
+CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o: /home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp
+CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o: CMakeFiles/pstu_doc_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o -MF CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o.d -o CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o -c /home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp
+
+CMakeFiles/pstu_doc_client.dir/authdialog.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pstu_doc_client.dir/authdialog.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp > CMakeFiles/pstu_doc_client.dir/authdialog.cpp.i
+
+CMakeFiles/pstu_doc_client.dir/authdialog.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pstu_doc_client.dir/authdialog.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp -o CMakeFiles/pstu_doc_client.dir/authdialog.cpp.s
+
+CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o: CMakeFiles/pstu_doc_client.dir/flags.make
+CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o: /home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.cpp
+CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o: CMakeFiles/pstu_doc_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o -MF CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o.d -o CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o -c /home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.cpp
+
+CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.cpp > CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.i
+
+CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.cpp -o CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.s
+
+CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o: CMakeFiles/pstu_doc_client.dir/flags.make
+CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o: /home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp
+CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o: CMakeFiles/pstu_doc_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o -MF CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o.d -o CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o -c /home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp
+
+CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp > CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.i
+
+CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp -o CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.s
+
+CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o: CMakeFiles/pstu_doc_client.dir/flags.make
+CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o: /home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp
+CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o: CMakeFiles/pstu_doc_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o -MF CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o.d -o CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o -c /home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp
+
+CMakeFiles/pstu_doc_client.dir/persondialog.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pstu_doc_client.dir/persondialog.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp > CMakeFiles/pstu_doc_client.dir/persondialog.cpp.i
+
+CMakeFiles/pstu_doc_client.dir/persondialog.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pstu_doc_client.dir/persondialog.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp -o CMakeFiles/pstu_doc_client.dir/persondialog.cpp.s
+
+CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o: CMakeFiles/pstu_doc_client.dir/flags.make
+CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o: /home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp
+CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o: CMakeFiles/pstu_doc_client.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o -MF CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o.d -o CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o -c /home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp
+
+CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp > CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.i
+
+CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp -o CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.s
+
 # Object files for target pstu_doc_client
 pstu_doc_client_OBJECTS = \
 "CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o" \
-"CMakeFiles/pstu_doc_client.dir/main.cpp.o"
+"CMakeFiles/pstu_doc_client.dir/main.cpp.o" \
+"CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o" \
+"CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o" \
+"CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o" \
+"CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o" \
+"CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o"
 
 # External object files for target pstu_doc_client
 pstu_doc_client_EXTERNAL_OBJECTS =
 
 pstu_doc_client: CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o
 pstu_doc_client: CMakeFiles/pstu_doc_client.dir/main.cpp.o
+pstu_doc_client: CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o
+pstu_doc_client: CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o
+pstu_doc_client: CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o
+pstu_doc_client: CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o
+pstu_doc_client: CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o
 pstu_doc_client: CMakeFiles/pstu_doc_client.dir/build.make
 pstu_doc_client: CMakeFiles/pstu_doc_client.dir/compiler_depend.ts
 pstu_doc_client: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.15
+pstu_doc_client: /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.15
 pstu_doc_client: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.15
 pstu_doc_client: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.15
 pstu_doc_client: CMakeFiles/pstu_doc_client.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable pstu_doc_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable pstu_doc_client"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/pstu_doc_client.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

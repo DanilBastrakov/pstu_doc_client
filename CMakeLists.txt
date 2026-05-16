@@ -11,12 +11,25 @@ find_package(Qt5 COMPONENTS
         Core
         Gui
         Widgets
+        Network
         REQUIRED)
 
-add_executable(pstu_doc_client main.cpp)
+add_executable(pstu_doc_client
+        main.cpp
+        authdialog.h
+        authdialog.cpp
+        mainwindow.h
+        mainwindow.cpp
+        collapsiblepanel.h
+        collapsiblepanel.cpp
+        persondialog.h
+        persondialog.cpp
+        sharedialog.h
+        sharedialog.cpp)
 target_link_libraries(pstu_doc_client
         Qt5::Core
         Qt5::Gui
         Qt5::Widgets
+        Qt5::Network
 )
 

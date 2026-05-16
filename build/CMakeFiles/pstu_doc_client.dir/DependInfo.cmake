@@ -8,8 +8,13 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp" "CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o.d"
+  "/home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp" "CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o.d"
   "/home/admin-debian/CLionProjects/pstu_doc_client/main.cpp" "CMakeFiles/pstu_doc_client.dir/main.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/main.cpp.o.d"
+  "/home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.cpp" "CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o.d"
+  "/home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp" "CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o.d"
   "/home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/mocs_compilation.cpp" "CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o.d"
+  "/home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp" "CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o" "gcc" "CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o.d"
   "" "pstu_doc_client" "gcc" "CMakeFiles/pstu_doc_client.dir/link.d"
   )
 

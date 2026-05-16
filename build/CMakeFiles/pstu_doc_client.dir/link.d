@@ -4,7 +4,13 @@ pstu_doc_client: \
   /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o \
   CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o \
   CMakeFiles/pstu_doc_client.dir/main.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o \
   /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.15 \
+  /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.15 \
   /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.15 \
   /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.15 \
   /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so \
@@ -33,11 +39,21 @@ pstu_doc_client: \
   /usr/lib/gcc/x86_64-linux-gnu/14/libgcc.a \
   /usr/lib/gcc/x86_64-linux-gnu/14/crtendS.o \
   /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o \
-  /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.15 \
   /lib/x86_64-linux-gnu/libm.so.6 \
   /lib/i386-linux-gnu/libz.so.1 \
   /usr/lib/i386-linux-gnu/libz.so.1 \
   /lib/x86_64-linux-gnu/libz.so.1 \
+  /lib/x86_64-linux-gnu/libgssapi_krb5.so.2 \
+  /lib/i386-linux-gnu/libGL.so.1 \
+  /usr/lib/i386-linux-gnu/libGL.so.1 \
+  /lib/x86_64-linux-gnu/libGL.so.1 \
+  /lib/i386-linux-gnu/libpng16.so.16 \
+  /usr/lib/i386-linux-gnu/libpng16.so.16 \
+  /lib/x86_64-linux-gnu/libpng16.so.16 \
+  /lib/i386-linux-gnu/libharfbuzz.so.0 \
+  /usr/lib/i386-linux-gnu/libharfbuzz.so.0 \
+  /lib/x86_64-linux-gnu/libharfbuzz.so.0 \
+  /lib/x86_64-linux-gnu/libmd4c.so.0 \
   /lib/x86_64-linux-gnu/libdouble-conversion.so.3 \
   /lib/x86_64-linux-gnu/libicui18n.so.76 \
   /lib/x86_64-linux-gnu/libicuuc.so.76 \
@@ -49,23 +65,10 @@ pstu_doc_client: \
   /usr/lib/i386-linux-gnu/libglib-2.0.so.0 \
   /lib/x86_64-linux-gnu/libglib-2.0.so.0 \
   /lib64/ld-linux-x86-64.so.2 \
-  /lib/i386-linux-gnu/libGL.so.1 \
-  /usr/lib/i386-linux-gnu/libGL.so.1 \
-  /lib/x86_64-linux-gnu/libGL.so.1 \
-  /lib/i386-linux-gnu/libpng16.so.16 \
-  /usr/lib/i386-linux-gnu/libpng16.so.16 \
-  /lib/x86_64-linux-gnu/libpng16.so.16 \
-  /lib/i386-linux-gnu/libharfbuzz.so.0 \
-  /usr/lib/i386-linux-gnu/libharfbuzz.so.0 \
-  /lib/x86_64-linux-gnu/libharfbuzz.so.0 \
-  /lib/x86_64-linux-gnu/libmd4c.so.0 \
-  /lib/x86_64-linux-gnu/libicudata.so.76 \
-  /lib/i386-linux-gnu/libatomic.so.1 \
-  /usr/lib/i386-linux-gnu/libatomic.so.1 \
-  /lib/x86_64-linux-gnu/libatomic.so.1 \
-  /lib/i386-linux-gnu/libpcre2-8.so.0 \
-  /usr/lib/i386-linux-gnu/libpcre2-8.so.0 \
-  /lib/x86_64-linux-gnu/libpcre2-8.so.0 \
+  /lib/x86_64-linux-gnu/libkrb5.so.3 \
+  /lib/x86_64-linux-gnu/libk5crypto.so.3 \
+  /lib/x86_64-linux-gnu/libcom_err.so.2 \
+  /lib/x86_64-linux-gnu/libkrb5support.so.0 \
   /lib/i386-linux-gnu/libGLdispatch.so.0 \
   /usr/lib/i386-linux-gnu/libGLdispatch.so.0 \
   /lib/x86_64-linux-gnu/libGLdispatch.so.0 \
@@ -78,6 +81,17 @@ pstu_doc_client: \
   /lib/i386-linux-gnu/libgraphite2.so.3 \
   /usr/lib/i386-linux-gnu/libgraphite2.so.3 \
   /lib/x86_64-linux-gnu/libgraphite2.so.3 \
+  /lib/x86_64-linux-gnu/libicudata.so.76 \
+  /lib/i386-linux-gnu/libatomic.so.1 \
+  /usr/lib/i386-linux-gnu/libatomic.so.1 \
+  /lib/x86_64-linux-gnu/libatomic.so.1 \
+  /lib/i386-linux-gnu/libpcre2-8.so.0 \
+  /usr/lib/i386-linux-gnu/libpcre2-8.so.0 \
+  /lib/x86_64-linux-gnu/libpcre2-8.so.0 \
+  /lib/x86_64-linux-gnu/libkeyutils.so.1 \
+  /lib/i386-linux-gnu/libresolv.so.2 \
+  /usr/lib/i386-linux-gnu/libresolv.so.2 \
+  /lib/x86_64-linux-gnu/libresolv.so.2 \
   /lib/i386-linux-gnu/libX11.so.6 \
   /usr/lib/i386-linux-gnu/libX11.so.6 \
   /lib/x86_64-linux-gnu/libX11.so.6 \
@@ -110,7 +124,19 @@ CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o:
 
 CMakeFiles/pstu_doc_client.dir/main.cpp.o:
 
+CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o:
+
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.15:
+
+/usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.15:
 
 /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.15:
 
@@ -168,8 +194,6 @@ CMakeFiles/pstu_doc_client.dir/main.cpp.o:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/../../../x86_64-linux-gnu/crtn.o:
 
-/usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.15:
-
 /lib/x86_64-linux-gnu/libm.so.6:
 
 /lib/i386-linux-gnu/libz.so.1:
@@ -177,6 +201,28 @@ CMakeFiles/pstu_doc_client.dir/main.cpp.o:
 /usr/lib/i386-linux-gnu/libz.so.1:
 
 /lib/x86_64-linux-gnu/libz.so.1:
+
+/lib/x86_64-linux-gnu/libgssapi_krb5.so.2:
+
+/lib/i386-linux-gnu/libGL.so.1:
+
+/usr/lib/i386-linux-gnu/libGL.so.1:
+
+/lib/x86_64-linux-gnu/libGL.so.1:
+
+/lib/i386-linux-gnu/libpng16.so.16:
+
+/usr/lib/i386-linux-gnu/libpng16.so.16:
+
+/lib/x86_64-linux-gnu/libpng16.so.16:
+
+/lib/i386-linux-gnu/libharfbuzz.so.0:
+
+/usr/lib/i386-linux-gnu/libharfbuzz.so.0:
+
+/lib/x86_64-linux-gnu/libharfbuzz.so.0:
+
+/lib/x86_64-linux-gnu/libmd4c.so.0:
 
 /lib/x86_64-linux-gnu/libdouble-conversion.so.3:
 
@@ -200,39 +246,13 @@ CMakeFiles/pstu_doc_client.dir/main.cpp.o:
 
 /lib64/ld-linux-x86-64.so.2:
 
-/lib/i386-linux-gnu/libGL.so.1:
+/lib/x86_64-linux-gnu/libkrb5.so.3:
 
-/usr/lib/i386-linux-gnu/libGL.so.1:
+/lib/x86_64-linux-gnu/libk5crypto.so.3:
 
-/lib/x86_64-linux-gnu/libGL.so.1:
+/lib/x86_64-linux-gnu/libcom_err.so.2:
 
-/lib/i386-linux-gnu/libpng16.so.16:
-
-/usr/lib/i386-linux-gnu/libpng16.so.16:
-
-/lib/x86_64-linux-gnu/libpng16.so.16:
-
-/lib/i386-linux-gnu/libharfbuzz.so.0:
-
-/usr/lib/i386-linux-gnu/libharfbuzz.so.0:
-
-/lib/x86_64-linux-gnu/libharfbuzz.so.0:
-
-/lib/x86_64-linux-gnu/libmd4c.so.0:
-
-/lib/x86_64-linux-gnu/libicudata.so.76:
-
-/lib/i386-linux-gnu/libatomic.so.1:
-
-/usr/lib/i386-linux-gnu/libatomic.so.1:
-
-/lib/x86_64-linux-gnu/libatomic.so.1:
-
-/lib/i386-linux-gnu/libpcre2-8.so.0:
-
-/usr/lib/i386-linux-gnu/libpcre2-8.so.0:
-
-/lib/x86_64-linux-gnu/libpcre2-8.so.0:
+/lib/x86_64-linux-gnu/libkrb5support.so.0:
 
 /lib/i386-linux-gnu/libGLdispatch.so.0:
 
@@ -257,6 +277,28 @@ CMakeFiles/pstu_doc_client.dir/main.cpp.o:
 /usr/lib/i386-linux-gnu/libgraphite2.so.3:
 
 /lib/x86_64-linux-gnu/libgraphite2.so.3:
+
+/lib/x86_64-linux-gnu/libicudata.so.76:
+
+/lib/i386-linux-gnu/libatomic.so.1:
+
+/usr/lib/i386-linux-gnu/libatomic.so.1:
+
+/lib/x86_64-linux-gnu/libatomic.so.1:
+
+/lib/i386-linux-gnu/libpcre2-8.so.0:
+
+/usr/lib/i386-linux-gnu/libpcre2-8.so.0:
+
+/lib/x86_64-linux-gnu/libpcre2-8.so.0:
+
+/lib/x86_64-linux-gnu/libkeyutils.so.1:
+
+/lib/i386-linux-gnu/libresolv.so.2:
+
+/usr/lib/i386-linux-gnu/libresolv.so.2:
+
+/lib/x86_64-linux-gnu/libresolv.so.2:
 
 /lib/i386-linux-gnu/libX11.so.6:
 
