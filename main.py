@@ -3,7 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_db
-from app.api import database_routes, ai_routes
+from app.api import auth_routes, database_routes, ai_routes
 
 app = FastAPI(title=settings.app_name)
 
@@ -15,6 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_routes.router)
 app.include_router(database_routes.router)
 app.include_router(ai_routes.router)
 

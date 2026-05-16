@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.auth import get_current_user
 from app.database import get_db
+from app.models import User
 from app.schemas import DiseasePredictionReport
 from app.services import ai_service, db_service
 
@@ -9,7 +11,7 @@ router = APIRouter(prefix="/api/ai", tags=["ai"])
 
 
 @router.post("/generate")
-async def generate(prompt: str, model: str = "llama3", language: str = "russian"):
+async def generate(prompt: str, model: str = "llama3", language: str = "russian", _: User = Depends(get_current_user)):
     try:
         result = await ai_service.generate_text(prompt, model, language)
         return {"response": result.get("response", "")}
@@ -18,7 +20,7 @@ async def generate(prompt: str, model: str = "llama3", language: str = "russian"
 
 
 @router.get("/models")
-async def models():
+async def models(_: User = Depends(get_current_user)):
     try:
         return await ai_service.list_models()
     except Exception as e:
@@ -31,8 +33,9 @@ async def predict_diseases(
     model: str = "llama3",
     language: str = "russian",
     db: AsyncSession = Depends(get_db),
+    current_user: User = Depends(get_current_user),
 ):
-    person = await db_service.get_person(db, person_id)
+    person = await db_service.get_person_for_user(db, person_id, current_user.id)
     if not person:
         raise HTTPException(status_code=404, detail="Person not found")
 

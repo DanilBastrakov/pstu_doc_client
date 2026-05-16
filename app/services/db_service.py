@@ -1,11 +1,11 @@
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func
 
-from app.models import Bean, Diagnosis, SymptomDisease
+from app.models import Bean, Diagnosis, SymptomDisease, person_doctors, User
 from app.schemas import PersonCreate, PersonUpdate, SymptomDiseaseCreate
 
 
-async def create_person(db: AsyncSession, person: PersonCreate) -> Bean:
+async def create_person(db: AsyncSession, person: PersonCreate, user_id: int) -> Bean:
     lifestyle_dict = person.lifestyle.model_dump() if person.lifestyle else None
     past_dict = person.past_conditions.model_dump() if person.past_conditions else None
     db_person = Bean(
@@ -17,32 +17,35 @@ async def create_person(db: AsyncSession, person: PersonCreate) -> Bean:
         past_conditions=past_dict,
     )
     db.add(db_person)
+    await db.flush()
+    await db.execute(person_doctors.insert().values(person_id=db_person.id, user_id=user_id))
     await db.commit()
     await db.refresh(db_person)
     return db_person
 
 
-async def get_person(db: AsyncSession, person_id: int):
+async def get_person_for_user(db: AsyncSession, person_id: int, user_id: int):
     result = await db.execute(
-        select(Bean).where(Bean.id == person_id)
+        select(Bean).where(
+            Bean.id == person_id,
+            Bean.doctors.any(User.id == user_id),
+        )
     )
     return result.scalar_one_or_none()
 
 
-async def get_persons(db: AsyncSession, skip: int = 0, limit: int = 100):
-    result = await db.execute(select(Bean).offset(skip).limit(limit))
+async def get_persons(db: AsyncSession, user_id: int, skip: int = 0, limit: int = 100):
+    result = await db.execute(
+        select(Bean).where(Bean.doctors.any(User.id == user_id)).offset(skip).limit(limit)
+    )
     return result.scalars().all()
 
 
-async def update_person(db: AsyncSession, person_id: int, updates: PersonUpdate):
-    person = await get_person(db, person_id)
+async def update_person(db: AsyncSession, person_id: int, updates: PersonUpdate, user_id: int):
+    person = await get_person_for_user(db, person_id, user_id)
     if not person:
         return None
     update_data = updates.model_dump(exclude_unset=True)
-    if "lifestyle" in update_data and update_data["lifestyle"] is not None:
-        update_data["lifestyle"] = update_data["lifestyle"]
-    if "past_conditions" in update_data and update_data["past_conditions"] is not None:
-        update_data["past_conditions"] = update_data["past_conditions"]
     for key, value in update_data.items():
         setattr(person, key, value)
     await db.commit()
@@ -50,8 +53,8 @@ async def update_person(db: AsyncSession, person_id: int, updates: PersonUpdate)
     return person
 
 
-async def delete_person(db: AsyncSession, person_id: int) -> bool:
-    person = await get_person(db, person_id)
+async def delete_person(db: AsyncSession, person_id: int, user_id: int) -> bool:
+    person = await get_person_for_user(db, person_id, user_id)
     if person:
         await db.delete(person)
         await db.commit()
@@ -76,6 +79,27 @@ async def create_diagnosis(db: AsyncSession, person_id: int, diagnosis_details: 
     await db.commit()
     await db.refresh(diagnosis)
     return diagnosis
+
+
+async def share_person(db: AsyncSession, person_id: int, owner_id: int, target_username: str) -> bool:
+    person = await get_person_for_user(db, person_id, owner_id)
+    if not person:
+        return False
+    result = await db.execute(select(User).where(User.username == target_username))
+    target = result.scalar_one_or_none()
+    if not target:
+        return False
+    already = await db.execute(
+        select(person_doctors).where(
+            person_doctors.c.person_id == person_id,
+            person_doctors.c.user_id == target.id,
+        )
+    )
+    if already.first():
+        return True
+    await db.execute(person_doctors.insert().values(person_id=person_id, user_id=target.id))
+    await db.commit()
+    return True
 
 
 async def get_all_symptom_diseases(db: AsyncSession):

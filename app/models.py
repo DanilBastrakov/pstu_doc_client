@@ -1,8 +1,30 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, JSON, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, JSON, ForeignKey, Boolean, Table
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
 from app.database import Base
+
+
+person_doctors = Table(
+    "person_doctors",
+    Base.metadata,
+    Column("person_id", Integer, ForeignKey("beans.id", ondelete="CASCADE"), primary_key=True),
+    Column("user_id", Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True),
+)
+
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String(50), unique=True, nullable=False, index=True)
+    email = Column(String(100), unique=True, nullable=False, index=True)
+    hashed_password = Column(String(255), nullable=False)
+    full_name = Column(String(100), nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    patients = relationship("Bean", secondary=person_doctors, back_populates="doctors")
 
 
 class Bean(Base):
@@ -21,6 +43,7 @@ class Bean(Base):
     updated_at = Column(DateTime(timezone=True), server_default=func.now(), onupdate=func.now())
 
     diagnoses = relationship("Diagnosis", back_populates="person", cascade="all, delete-orphan")
+    doctors = relationship("User", secondary=person_doctors, back_populates="patients")
 
 
 class Diagnosis(Base):
