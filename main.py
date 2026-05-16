@@ -44,7 +44,7 @@ def chunk_by_paragraphs(text: str, max_chars: int = 1000) -> list[str]:
 INDEX = []
 
 
-def build_index(folder="./my_docs", max_chars=1000, embed_model="nomic-embed-text"):
+def build_index(folder="./docs", max_chars=1000, embed_model="nomic-embed-text"):
     global INDEX
     docs = load_documents(folder)
     INDEX = []
@@ -56,8 +56,6 @@ def build_index(folder="./my_docs", max_chars=1000, embed_model="nomic-embed-tex
             INDEX.append({"vector": vector, "text": chunk, "source": doc["source"]})
     print(f"Indexed {len(INDEX)} chunks.")
 
-
-# ---------- Retrieval ----------
 
 def cosine_sim(a, b):
     return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b) + 1e-10)
@@ -71,8 +69,6 @@ def retrieve(query: str, top_k=5, embed_model="nomic-embed-text") -> list[dict]:
     scores.sort(key=lambda x: x[0], reverse=True)
     return [INDEX[i] for _, i in scores[:top_k]]
 
-
-# ---------- Self-RAG: verification ----------
 
 def extract_claims(text: str, llm_model="qwen2.5:7b") -> list[str]:
     if not text.strip():
@@ -124,8 +120,6 @@ def verification_step(generation: str, embed_model="nomic-embed-text", llm_model
     return clean_text, quality
 
 
-# ---------- Web search ----------
-
 def web_search(query: str, max_results=3) -> str:
     try:
         with DDGS() as ddgs:
@@ -136,8 +130,6 @@ def web_search(query: str, max_results=3) -> str:
     except Exception:
         return ""
 
-
-# ---------- Hybrid pipeline ----------
 
 def hybrid_ask(query: str, llm_model="qwen2.5:7b", embed_model="nomic-embed-text") -> str:
     chunks = retrieve(query, top_k=5, embed_model=embed_model)
