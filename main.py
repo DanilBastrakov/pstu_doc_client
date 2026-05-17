@@ -303,15 +303,15 @@ def setup_rag_chain(vectordb, chunks: list[Document]):
 
     print(f"Подключаем LLM Ollama: {LLM_MODEL_NAME}...")
     try:
-        llm = Ollama(model=LLM_MODEL_NAME, temperature=0.0)
-        llm.invoke("ping")   # проверка доступности
+        llm = Ollama(model=LLM_MODEL_NAME, temperature=0.0, num_gpu=-1, callbacks=[StreamingStdOutCallbackHandler()])
+        #llm.invoke("ping")   # проверка доступности
     except Exception as e:
         print(f"Ошибка соединения с Ollama. Убедитесь, что сервер запущен и модель "
               f"'{LLM_MODEL_NAME}' скачана (ollama pull {LLM_MODEL_NAME}).\n{e}")
         sys.exit(1)
 
     # Промпт на русском, использующий только контекст
-    prompt_template = """Ты — ассистент, который отвечает строго по предоставленному контексту.
+    prompt_template = """Ты — врачебный ассистент, который отвечает строго по предоставленному контексту. Пользователь - врач, ты должен вернуть точную последовательность действий.
 Если ответа нет в контексте, скажи, что не знаешь. Не придумывай.
 
 Контекст:
