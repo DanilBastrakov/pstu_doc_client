@@ -1,1 +1,28 @@
+# Source documents (may contain sensitive/proprietary content)
 ./docs
+docs/
+
+# Vector database directories (binary, large, rebuild from docs)
+chroma_db/
+med_db/
+
+# Python environment
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Eval output (generated artefact, not source)
+eval_results.txt
+
+# IDE / OS
+.idea/
+.vscode/
+*.DS_Store
+Thumbs.db
