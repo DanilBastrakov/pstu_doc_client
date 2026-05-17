@@ -422,6 +422,7 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtcpsocket.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtnetwork-config.h \
   /usr/include/x86_64-linux-gnu/qt5/QtNetwork/qtnetworkglobal.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QComboBox \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QDialog \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel \
@@ -429,6 +430,7 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QListWidget \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMainWindow \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QPushButton \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScrollArea \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QSpinBox \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QVBoxLayout \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
@@ -439,6 +441,7 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractspinbox.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qboxlayout.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcheckbox.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcombobox.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h \
@@ -452,6 +455,7 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmainwindow.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qpushbutton.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollarea.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qsizepolicy.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qspinbox.h \
@@ -615,6 +619,8 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemview.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemdelegate.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScrollArea:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QPushButton:
 
@@ -792,6 +798,8 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
 
 /usr/lib/linux/uapi/x86/asm/bitsperlong.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox:
+
 /usr/include/c++/14/numbers:
 
 /usr/include/c++/14/bits/std_abs.h:
@@ -907,6 +915,8 @@ CMakeFiles/4.3.2/CMakeSystem.cmake:
 /usr/include/c++/14/compare:
 
 /usr/include/c++/14/bits/invoke.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollarea.h:
 
 /usr/include/c++/14/bits/functexcept.h:
 
@@ -1231,6 +1241,8 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 /usr/include/c++/14/bits/atomic_base.h:
 
 /snap/cmake/current/share/cmake-4.3/Modules/Internal/CMakeCLinkerInformation.cmake:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcheckbox.h:
 
 /usr/include/c++/14/bits/c++0x_warning.h:
 

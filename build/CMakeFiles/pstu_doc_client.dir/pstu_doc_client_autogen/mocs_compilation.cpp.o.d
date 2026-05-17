@@ -423,6 +423,10 @@ CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QTimer \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qtimer.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qbasictimer.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScrollArea \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollarea.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcheckbox.h \
  /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/EWIEGA46WW/moc_persondialog.cpp \
  /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/EWIEGA46WW/../../../persondialog.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QSpinBox \
