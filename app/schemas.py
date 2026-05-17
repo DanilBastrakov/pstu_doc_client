@@ -130,6 +130,28 @@ class ShareRequest(BaseModel):
     username: str
 
 
+class AppendPromptRequest(BaseModel):
+    prompt: str
+
+
+class ChatMessageCreate(BaseModel):
+    role: str
+    content: str
+    model: Optional[str] = None
+
+
+class ChatMessageResponse(BaseModel):
+    id: int
+    person_id: int
+    role: str
+    content: str
+    model: Optional[str] = None
+    created_at: Optional[datetime] = None
+
+    class Config:
+        from_attributes = True
+
+
 class DiseasePrediction(BaseModel):
     disease: str
     probability: float

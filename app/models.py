@@ -44,6 +44,7 @@ class Bean(Base):
 
     diagnoses = relationship("Diagnosis", back_populates="person", cascade="all, delete-orphan")
     doctors = relationship("User", secondary=person_doctors, back_populates="patients")
+    messages = relationship("ChatMessage", back_populates="person", cascade="all, delete-orphan", order_by="ChatMessage.created_at")
 
 
 class Diagnosis(Base):
@@ -57,6 +58,20 @@ class Diagnosis(Base):
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
     person = relationship("Bean", back_populates="diagnoses")
+
+
+class ChatMessage(Base):
+    __tablename__ = "chat_messages"
+
+    id = Column(Integer, primary_key=True, index=True)
+    person_id = Column(Integer, ForeignKey("beans.id", ondelete="CASCADE"), nullable=False, index=True)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
+    role = Column(String(20), nullable=False)
+    content = Column(Text, nullable=False)
+    model = Column(String(50), nullable=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    person = relationship("Bean", back_populates="messages")
 
 
 class SymptomDisease(Base):
