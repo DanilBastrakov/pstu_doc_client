@@ -1,0 +1,25 @@
+# Core RAG pipeline (main.py)
+pymorphy3>=2.0
+langchain==0.2.16
+
+# API server (api.py)
+fastapi>=0.100.0
+uvicorn>=0.20.0
+httpx>=0.28.0
+langchain-community>=0.2.16
+langchain-core>=0.2.43
+langchain-text-splitters>=0.2.4
+chromadb>=0.5.5
+sentence-transformers>=3.0.1
+pdfplumber>=0.10.4
+ollama>=0.6.0
+
+# Lightweight retrieval engine (mini_rag.py, eval_rag.py)
+scikit-learn==1.8.0
+numpy==1.26.4
+
+# Transitive heavy deps — pin for reproducibility
+torch>=2.0.0
+transformers>=4.0.0
+huggingface-hub>=0.20.0
+pydantic>=2.9.0

@@ -1,18 +1,8 @@
 #!/usr/bin/env python3
-"""
-Локальный RAG-пайплайн в одном скрипте (PDF через PDFPlumber)
-- Загружает PDF (через pdfplumber) и TXT из папки DOCUMENTS_DIR
-- Разбивает на секции, затем на токен-уровневые чанки
-- Эмбеддинги: intfloat/multilingual-e5-small (512 токенов, 384-dim)
-  Префиксы "query:" / "passage:" обязательны для e5-моделей.
-- Хранилище: ChromaDB (на диске)
-- LLM: Ollama
-"""
 
 import os, re, sys, shutil
 os.environ["CHROMA_TELEMETRY"] = "false"
 os.environ["NO_CHROMA_TELEMETRY"] = "true"
-# Force UTF‑8 on stdin/stdout so Russian input doesn't crash input() with UnicodeDecodeError
 if sys.stdin.encoding.lower() not in ("utf-8", "utf8"):
     sys.stdin.reconfigure(encoding="utf-8")
 if sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
@@ -79,13 +69,10 @@ def _is_heading_line(line: str) -> bool:
     s = line.strip()
     if len(s) < 4:
         return False
-    # Numeric headings: 1., 1.2., 3.2.1, etc.
     if re.match(r"^\d+(?:\.\d+)*[.)]?\s+\S", s):
         return True
-    # Common Russian section labels
     if re.match(r"^(приложение|список|термины и определения|критерии|диагностика|лечение|хирургическое лечение)\b", s.lower()):
         return True
-    # All-caps headings
     letters = re.findall(r"[A-ZА-ЯЁ]", s)
     if letters:
         upper_ratio = len(letters) / max(1, len(re.findall(r"[A-ZА-ЯЁa-zа-яё]", s)))
@@ -116,7 +103,6 @@ def _split_sections_with_pages(text: str):
         nonlocal current_lines, current_title, section_page_start, section_page_end
         if not current_lines:
             return
-        # Drop obvious TOC sections to avoid contaminating retrieval
         if _looks_like_toc(current_lines):
             current_lines = []
             section_page_start = None
@@ -169,7 +155,6 @@ def _sectionize_documents(docs: list[Document]) -> list[Document]:
 
     section_docs: list[Document] = []
     for source, pages in by_source.items():
-        # Sort by page when available
         pages_sorted = sorted(pages, key=lambda p: (p[0] is None, p[0] if p[0] is not None else 0))
         combined_lines: list[str] = []
         for page, text in pages_sorted:
@@ -267,8 +252,6 @@ def setup_rag_chain(vectordb, chunks: list[Document]):
     bm25_retriever.k = 20
     chroma_retriever = vectordb.as_retriever(search_kwargs={"k": 20})
 
-    # Reciprocal Rank Fusion — объединяет ранги из BM25 (точные совпадения)
-    # и Chroma (семантика), отдавая единый топ-4.
     class HybridRetriever(BaseRetriever):
         """RRF-ретривер, комбинирующий BM25 и Chroma."""
         bm25_retriever: BM25Retriever
@@ -303,14 +286,12 @@ def setup_rag_chain(vectordb, chunks: list[Document]):
 
     print(f"Подключаем LLM Ollama: {LLM_MODEL_NAME}...")
     try:
-        llm = Ollama(model=LLM_MODEL_NAME, temperature=0.0, num_gpu=-1, callbacks=[StreamingStdOutCallbackHandler()])
-        #llm.invoke("ping")   # проверка доступности
+        llm = Ollama(model=LLM_MODEL_NAME, temperature=0.0, num_gpu=-1, num_thread=8, callbacks=[StreamingStdOutCallbackHandler()])
     except Exception as e:
         print(f"Ошибка соединения с Ollama. Убедитесь, что сервер запущен и модель "
               f"'{LLM_MODEL_NAME}' скачана (ollama pull {LLM_MODEL_NAME}).\n{e}")
         sys.exit(1)
 
-    # Промпт на русском, использующий только контекст
     prompt_template = """Ты — врачебный ассистент, который отвечает строго по предоставленному контексту. Пользователь - врач, ты должен вернуть точную последовательность действий.
 Если ответа нет в контексте, скажи, что не знаешь. Не придумывай.
 
@@ -332,7 +313,6 @@ def setup_rag_chain(vectordb, chunks: list[Document]):
     return qa_chain
 
 def main():
-    # Проверяем, есть ли готовый индекс, иначе строим
     if not os.path.exists(CHROMA_PERSIST_DIR):
         print("Индекс не найден, создаём новый...")
         vectordb, chunks = build_index(DOCUMENTS_DIR, CHROMA_PERSIST_DIR)

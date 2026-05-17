@@ -18,9 +18,6 @@ dist/
 build/
 .eggs/
 
-# Eval output (generated artefact, not source)
-eval_results.txt
-
 # IDE / OS
 .idea/
 .vscode/
