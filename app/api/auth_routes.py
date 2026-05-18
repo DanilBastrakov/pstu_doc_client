@@ -13,15 +13,13 @@ router = APIRouter(prefix="/api/auth", tags=["auth"])
 @router.post("/register", response_model=UserResponse, status_code=status.HTTP_201_CREATED)
 async def register(data: UserCreate, db: AsyncSession = Depends(get_db)):
     existing = await db.execute(
-        select(User).where((User.username == data.username) | (User.email == data.email))
+        select(User).where(User.username == data.username)
     )
     if existing.scalar_one_or_none():
-        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username or email already taken")
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="Username already taken")
     user = User(
         username=data.username,
-        email=data.email,
         hashed_password=hash_password(data.password),
-        full_name=data.full_name,
     )
     db.add(user)
     await db.commit()
