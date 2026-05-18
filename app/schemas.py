@@ -2,6 +2,8 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, List
 
+from sqlalchemy import false
+
 
 class UserCreate(BaseModel):
     username: str
@@ -132,6 +134,7 @@ class ShareRequest(BaseModel):
 
 class AppendPromptRequest(BaseModel):
     prompt: str
+    include_history: bool = False
 
 
 class ChatMessageCreate(BaseModel):

@@ -49,8 +49,14 @@ def append_prediction_prompt(prompt: str, person_data: dict, existing_diagnoses:
 
 def append_person_data(prompt: str, person_data: dict, existing_diagnoses: list) -> str:
     symptoms = person_data.get("symptoms") or []
+    if not isinstance(symptoms, list):
+        symptoms = []
     lifestyle = person_data.get("lifestyle") or {}
+    if not isinstance(lifestyle, dict):
+        lifestyle = {}
     past_conditions = person_data.get("past_conditions") or {}
+    if not isinstance(past_conditions, dict):
+        past_conditions = {}
     past_conditions_list = past_conditions.get("conditions") or []
     family_history = past_conditions.get("family_history") or []
 
@@ -70,7 +76,7 @@ Age: {person_data.get('age', 'unknown')}
 Gender: {person_data.get('gender', 'unknown')}
 Symptoms: {', '.join(symptoms) if symptoms else 'none'}
 Lifestyle:
-  - Smoking: {lifestyle.get('smimming', 'unknown')}
+  - Smoking: {lifestyle.get('smoking', 'unknown')}
   - Alcohol: {lifestyle.get('alcohol', 'unknown')}
   - Exercise: {lifestyle.get('exercise', 'unknown')}
   - Diet: {lifestyle.get('diet', 'unknown')}
@@ -85,7 +91,7 @@ Past Conditions:
 {diagnoses_text}
 ======================"""
 
-    person_block += "\n\nТы общаешься с врачом. НЕ НАПРАВЛЯЙ ПОЛЬЗОВАТЕЛЯ К ВРАЧУ. Используй профессиональную медицинскую терминологию.\nОтвечай развернуто, но не придумывай."
+    person_block += "\n\nТы общаешься с врачом. НЕ НАПРАВЛЯЙ ПОЛЬЗОВАТЕЛЯ К ВРАЧУ. Используй профессиональную медицинскую терминологию.\nОтвечай развернуто, твой ответ должен содержать ТОЛЬКО ОТВЕТ ДЛЯ ВРАЧА, без технического текста, но не придумывай."
     return prompt + person_block
 
 
@@ -120,7 +126,7 @@ def build_disease_prompt(
 - Симптомы: {', '.join(symptoms) if symptoms else 'не указаны'}
 
 ФАКТОРЫ ОБРАЗА ЖИЗНИ:
-- Курение: {lifestyle.get('smimming', 'неизвестно')}
+- Курение: {lifestyle.get('smoking', 'неизвестно')}
 - Алкоголь: {lifestyle.get('alcohol', 'неизвестно')}
 - Физическая активность: {lifestyle.get('exercise', 'неизвестно')}
 - Питание: {lifestyle.get('diet', 'неизвестно')}
@@ -170,7 +176,7 @@ PATIENT INFORMATION:
 - Symptoms: {', '.join(symptoms) if symptoms else 'none reported'}
 
 LIFESTYLE FACTORS:
-- Smoking: {lifestyle.get('smimming', 'unknown')}
+- Smoking: {lifestyle.get('smoking', 'unknown')}
 - Alcohol: {lifestyle.get('alcohol', 'unknown')}
 - Exercise: {lifestyle.get('exercise', 'unknown')}
 - Diet: {lifestyle.get('diet', 'unknown')}
@@ -221,12 +227,18 @@ async def predict_diseases(
     language: str = "russian",
 ) -> dict:
     symptoms = person_data.get("symptoms") or []
+    if not isinstance(symptoms, list):
+        symptoms = []
     lifestyle = person_data.get("lifestyle") or {}
+    if not isinstance(lifestyle, dict):
+        lifestyle = {}
     past_conditions = person_data.get("past_conditions") or {}
+    if not isinstance(past_conditions, dict):
+        past_conditions = {}
 
     risk_factors = []
-    if lifestyle.get("smimming") and lifestyle.get("smimming") != "no":
-        risk_factors.append(f"smoking: {lifestyle['smimming']}")
+    if lifestyle.get("smoking") and lifestyle.get("smoking") != "no":
+        risk_factors.append(f"smoking: {lifestyle['smoking']}")
     if lifestyle.get("alcohol") and lifestyle.get("alcohol") != "no":
         risk_factors.append(f"alcohol: {lifestyle['alcohol']}")
     if lifestyle.get("stress") and lifestyle.get("stress") != "low":
