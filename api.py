@@ -49,7 +49,7 @@ OLLAMA_TIMEOUT = int(os.environ.get("OLLAMA_TIMEOUT", "300"))
 
 async def warm_up():
     try:
-        async with httpx.AsyncClient() as client:
+        async with httpx.AsyncClient(proxy=None) as client:
             await client.post(
                 f"{OLLAMA_BASE_URL}/api/generate",
                 json={"model": LLM_MODEL_NAME, "prompt": "ping", "stream": False},
@@ -108,6 +108,7 @@ async def startup():
     if not os.path.exists(CHROMA_PERSIST_DIR):
         vectordb, chunks = build_index(DOCUMENTS_DIR, CHROMA_PERSIST_DIR)
     else:
+        print(" ::: " + CHROMA_PERSIST_DIR)
         vectordb, chunks = load_existing_index(CHROMA_PERSIST_DIR)
         if not vectordb:
             shutil.rmtree(CHROMA_PERSIST_DIR)
@@ -138,10 +139,12 @@ async def generate(req: GenerateRequest):
                     d.page_content for d in docs
                 )
                 augmented_prompt = f"{context}\n\n---\n\n{req.prompt}"
-        except Exception:
-            pass
+        except Exception as e:
+                import traceback
+                traceback.print_exc()
+                raise HTTPException(status_code=500, detail=str(e))
 
-    async with httpx.AsyncClient() as client:
+    async with httpx.AsyncClient(proxy=None) as client:
         models_to_try = [req.model]
         if req.model != LLM_MODEL_NAME:
             models_to_try.append(LLM_MODEL_NAME)

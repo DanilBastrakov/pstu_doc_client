@@ -229,6 +229,7 @@ def load_existing_index(persist_dir: str) -> tuple[Chroma | None, list[Document]
         embedding_function=embeddings,
         collection_metadata={"hnsw:space": "cosine"},
     )
+
     try:
         count = vectordb._collection.count()
         print(f"Индекс загружен, чанков: {count}")
