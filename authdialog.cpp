@@ -43,14 +43,6 @@ void AuthDialog::setupUi() {
     auto *regLayout = new QFormLayout(m_registerFields);
     regLayout->setContentsMargins(0, 0, 0, 0);
 
-    m_emailEdit = new QLineEdit();
-    m_emailEdit->setPlaceholderText("email@example.com");
-    regLayout->addRow("Email:", m_emailEdit);
-
-    m_fullNameEdit = new QLineEdit();
-    m_fullNameEdit->setPlaceholderText(QString::fromUtf8("Иванов Иван"));
-    regLayout->addRow(QString::fromUtf8("Полное имя:"), m_fullNameEdit);
-
     m_registerFields->setVisible(false);
     form->addRow(m_registerFields);
 
@@ -131,10 +123,8 @@ void AuthDialog::onLoginClicked() {
 void AuthDialog::onRegisterClicked() {
     QString username = m_usernameEdit->text().trimmed();
     QString password = m_passwordEdit->text();
-    QString email = m_emailEdit->text().trimmed();
-    QString fullName = m_fullNameEdit->text().trimmed();
 
-    if (username.isEmpty() || password.isEmpty() || email.isEmpty() || fullName.isEmpty()) {
+    if (username.isEmpty() || password.isEmpty()) {
         m_statusLabel->setText(QString::fromUtf8("Заполните все поля"));
         m_statusLabel->setStyleSheet("color: red;");
         return;
@@ -150,8 +140,6 @@ void AuthDialog::onRegisterClicked() {
     QJsonObject body;
     body["username"] = username;
     body["password"] = password;
-    body["email"] = email;
-    body["full_name"] = fullName;
 
     QNetworkReply *reply = m_nam->post(req, QJsonDocument(body).toJson());
     connect(reply, &QNetworkReply::finished, this, [this, reply]() {
