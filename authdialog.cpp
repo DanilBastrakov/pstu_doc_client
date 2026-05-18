@@ -23,7 +23,7 @@ QString AuthDialog::token() const { return m_token; }
 void AuthDialog::setupUi() {
     auto *layout = new QVBoxLayout(this);
 
-    auto *title = new QLabel("pstu_doc_client");
+    auto *title = new QLabel("Помощник принятия решений");
     title->setAlignment(Qt::AlignCenter);
     title->setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 10px;");
     layout->addWidget(title);

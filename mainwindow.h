@@ -24,6 +24,7 @@ private slots:
     void onAddPersonClicked();
     void onRemovePersonClicked();
     void onSharePersonClicked();
+    void onRedactPersonClicked();
     void onSendClicked();
     void onPredictClicked();
     void onPersonSelectionChanged(QListWidgetItem *current, QListWidgetItem *previous);

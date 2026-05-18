@@ -13,15 +13,20 @@ class PersonDialog : public QDialog {
     Q_OBJECT
 public:
     explicit PersonDialog(const QString &token, QWidget *parent = nullptr);
+    explicit PersonDialog(const QString &token, int personId, const QJsonObject &personData, QWidget *parent = nullptr);
 
 private slots:
     void onSaveClicked();
 
 private:
     void setupUi();
+    void populateFields(const QJsonObject &obj);
 
     QString m_token;
     QNetworkAccessManager *m_nam;
+
+    bool m_editMode = false;
+    int m_editPersonId = -1;
 
     QLineEdit *m_nameEdit;
     QSpinBox *m_ageSpin;

@@ -26,7 +26,7 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 {
     m_nam.setParent(this);
 
-    setWindowTitle("pstu_doc_client");
+    setWindowTitle("Помощник принятия решений");
     resize(900, 600);
 
     auto *splitter = new QSplitter(Qt::Horizontal, this);
@@ -49,9 +49,11 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
     auto *personBtnRow = new QHBoxLayout();
     auto *addPersonBtn = new QPushButton(QString::fromUtf8("Добавить пациента"));
     auto *sharePersonBtn = new QPushButton(QString::fromUtf8("Поделиться"));
+    auto *editPersonBtn = new QPushButton(QString::fromUtf8("Редактировать"));
     auto *removePersonBtn = new QPushButton(QString::fromUtf8("Удалить пациента"));
     personBtnRow->addWidget(addPersonBtn);
     personBtnRow->addWidget(sharePersonBtn);
+    personBtnRow->addWidget(editPersonBtn);
     personBtnRow->addWidget(removePersonBtn);
     personContent->addLayout(personBtnRow);
 
@@ -130,6 +132,7 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 
     connect(addPersonBtn, &QPushButton::clicked, this, &MainWindow::onAddPersonClicked);
     connect(sharePersonBtn, &QPushButton::clicked, this, &MainWindow::onSharePersonClicked);
+    connect(editPersonBtn, &QPushButton::clicked, this, &MainWindow::onRedactPersonClicked);
     connect(removePersonBtn, &QPushButton::clicked, this, &MainWindow::onRemovePersonClicked);
 
     loadPersons();
@@ -231,6 +234,36 @@ void MainWindow::onSharePersonClicked() {
         QMessageBox::information(this, QString::fromUtf8("Успешно"),
                                  QString::fromUtf8("Пациент передан"));
     }
+}
+
+void MainWindow::onRedactPersonClicked() {
+    auto *item = m_personsList->currentItem();
+    if (!item) {
+        QMessageBox::warning(this, QString::fromUtf8("Ошибка"),
+                             QString::fromUtf8("Выберите пациента"));
+        return;
+    }
+
+    int personId = item->data(Qt::UserRole).toInt();
+
+    QUrl url(BASE_URL + QString("/api/db/persons/%1").arg(personId));
+    QNetworkRequest req(url);
+    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
+
+    QNetworkReply *reply = m_nam.get(req);
+    connect(reply, &QNetworkReply::finished, this, [this, reply, personId]() {
+        reply->deleteLater();
+        if (reply->error() != QNetworkReply::NoError) {
+            QMessageBox::warning(this, QString::fromUtf8("Ошибка"),
+                                 QString::fromUtf8("Не удалось загрузить данные пациента"));
+            return;
+        }
+
+        QJsonObject obj = QJsonDocument::fromJson(reply->readAll()).object();
+        PersonDialog dialog(m_token, personId, obj, this);
+        if (dialog.exec() == QDialog::Accepted)
+            loadPersons();
+    });
 }
 
 void MainWindow::appendMessage(const QString &text, bool isUser) {
@@ -359,11 +392,7 @@ void MainWindow::onSendClicked() {
             return;
 
         // Step 2: get enriched prompt
-        bool includeHistory = m_historyCheck->isChecked();
-        QString appendUrl = BASE_URL + QString("/api/ai/append_prompt/%1").arg(m_currentPersonId);
-        if (includeHistory)
-            appendUrl += "?include_history=true";
-
+        QString appendUrl = BASE_URL + QString("/api/ai/append_and_generate/%1").arg(m_currentPersonId);
         QUrl url(appendUrl);
         QNetworkRequest appendReq(url);
         appendReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -371,36 +400,15 @@ void MainWindow::onSendClicked() {
 
         QJsonObject appendBody;
         appendBody["prompt"] = text;
+        appendBody["include_history"] = m_historyCheck->isChecked();
 
         QNetworkReply *appendReply = m_nam.post(appendReq, QJsonDocument(appendBody).toJson(QJsonDocument::Compact));
         connect(appendReply, &QNetworkReply::finished, this, [this, appendReply]() {
-            appendReply->deleteLater();
-            if (appendReply->error() != QNetworkReply::NoError)
-                return;
-
-            QJsonObject appendObj = QJsonDocument::fromJson(appendReply->readAll()).object();
-            QString retrievedPrompt = appendObj.value("prompt").toString();
-            if (retrievedPrompt.isEmpty())
-                return;
-
-            // Step 3: forward prompt to AI service
-            QUrl aiUrl("http://localhost:8001/api/generate");
-            QNetworkRequest aiReq(aiUrl);
-            aiReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-            QJsonObject aiBody;
-            aiBody["prompt"] = retrievedPrompt;
-            aiBody["model"] = "mistral";
-            aiBody["language"] = "russian";
-            aiBody["use_rag"] = true;
-
-            QNetworkReply *aiReply = m_nam.post(aiReq, QJsonDocument(aiBody).toJson(QJsonDocument::Compact));
-            connect(aiReply, &QNetworkReply::finished, this, [this, aiReply]() {
-                aiReply->deleteLater();
-                if (aiReply->error() != QNetworkReply::NoError)
+                appendReply->deleteLater();
+                if (appendReply->error() != QNetworkReply::NoError)
                     return;
 
-                QJsonObject obj = QJsonDocument::fromJson(aiReply->readAll()).object();
+                QJsonObject obj = QJsonDocument::fromJson(appendReply->readAll()).object();
                 QString response = obj.value("response").toString();
                 if (!response.isEmpty()) {
                     QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
@@ -417,7 +425,6 @@ void MainWindow::onSendClicked() {
                 }
 
             });
-        });
     });
 }
 

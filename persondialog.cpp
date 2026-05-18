@@ -23,6 +23,16 @@ PersonDialog::PersonDialog(const QString &token, QWidget *parent)
     setupUi();
 }
 
+PersonDialog::PersonDialog(const QString &token, int personId, const QJsonObject &personData, QWidget *parent)
+    : QDialog(parent), m_token(token), m_nam(new QNetworkAccessManager(this)),
+      m_editMode(true), m_editPersonId(personId)
+{
+    setWindowTitle(QString::fromUtf8("Редактировать пациента"));
+    resize(500, 600);
+    setupUi();
+    populateFields(personData);
+}
+
 void PersonDialog::setupUi() {
     auto *layout = new QVBoxLayout(this);
 
@@ -47,8 +57,7 @@ void PersonDialog::setupUi() {
     m_genderCombo = new QComboBox();
     m_genderCombo->addItems({
         QString::fromUtf8("мужской"),
-        QString::fromUtf8("женский"),
-        QString::fromUtf8("другой")
+        QString::fromUtf8("женский")
     });
     basicForm->addRow(QString::fromUtf8("Пол:"), m_genderCombo);
 
@@ -98,7 +107,6 @@ void PersonDialog::setupUi() {
 
     m_exerciseCombo = new QComboBox();
     m_exerciseCombo->addItems({
-        QString::fromUtf8("нет"),
         QString::fromUtf8("легкая"),
         QString::fromUtf8("умеренная"),
         QString::fromUtf8("интенсивная")
@@ -182,6 +190,41 @@ void PersonDialog::setupUi() {
     connect(cancelBtn, &QPushButton::clicked, this, &QDialog::reject);
 }
 
+void PersonDialog::populateFields(const QJsonObject &obj) {
+    m_nameEdit->setText(obj.value("name").toString());
+    m_ageSpin->setValue(obj.value("age").toInt());
+
+    QString gender = obj.value("gender").toString();
+    int genderIdx = m_genderCombo->findText(gender);
+    if (genderIdx >= 0) m_genderCombo->setCurrentIndex(genderIdx);
+
+    QJsonArray symptoms = obj.value("symptoms").toArray();
+    for (const auto &s : symptoms)
+        m_symptomsList->addItem(s.toString());
+
+    QJsonObject lifestyle = obj.value("lifestyle").toObject();
+    QString smoking = lifestyle.value("smoking").toString();
+    int smokingIdx = m_smokingCombo->findText(smoking);
+    if (smokingIdx >= 0) m_smokingCombo->setCurrentIndex(smokingIdx);
+
+    QString alcohol = lifestyle.value("alcohol").toString();
+    int alcoholIdx = m_alcoholCombo->findText(alcohol);
+    if (alcoholIdx >= 0) m_alcoholCombo->setCurrentIndex(alcoholIdx);
+
+    QString exercise = lifestyle.value("exercise").toString();
+    int exerciseIdx = m_exerciseCombo->findText(exercise);
+    if (exerciseIdx >= 0) m_exerciseCombo->setCurrentIndex(exerciseIdx);
+
+    QJsonObject pastConditions = obj.value("past_conditions").toObject();
+    QJsonArray conditions = pastConditions.value("conditions").toArray();
+    for (const auto &c : conditions)
+        m_conditionsList->addItem(c.toString());
+
+    QJsonArray medications = pastConditions.value("medications").toArray();
+    for (const auto &m : medications)
+        m_medicationsList->addItem(m.toString());
+}
+
 void PersonDialog::onSaveClicked() {
     QString name = m_nameEdit->text().trimmed();
     if (name.isEmpty()) {
@@ -220,12 +263,16 @@ void PersonDialog::onSaveClicked() {
     pastConditions["medications"] = medications;
     body["past_conditions"] = pastConditions;
 
-    QUrl url(BASE_URL + "/api/db/persons");
+    QUrl url = m_editMode
+        ? QUrl(BASE_URL + QString("/api/db/persons/%1").arg(m_editPersonId))
+        : QUrl(BASE_URL + "/api/db/persons");
     QNetworkRequest req(url);
     req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
 
-    QNetworkReply *reply = m_nam->post(req, QJsonDocument(body).toJson());
+    QNetworkReply *reply = m_editMode
+        ? m_nam->put(req, QJsonDocument(body).toJson())
+        : m_nam->post(req, QJsonDocument(body).toJson());
     connect(reply, &QNetworkReply::finished, this, [this, reply]() {
         reply->deleteLater();
         QByteArray data = reply->readAll();
@@ -237,9 +284,13 @@ void PersonDialog::onSaveClicked() {
             m_statusLabel->setStyleSheet("color: red;");
             return;
         }
-        QJsonObject obj = QJsonDocument::fromJson(data).object();
-        m_createdPersonName = obj.value("name").toString();
-        m_createdPersonId = obj.value("id").toInt();
-        accept();
+        if (m_editMode) {
+            accept();
+        } else {
+            QJsonObject obj = QJsonDocument::fromJson(data).object();
+            m_createdPersonName = obj.value("name").toString();
+            m_createdPersonId = obj.value("id").toInt();
+            accept();
+        }
     });
 }
