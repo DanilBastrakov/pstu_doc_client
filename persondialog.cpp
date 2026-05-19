@@ -13,6 +13,7 @@
 #include <QScrollArea>
 #include <QMessageBox>
 
+// временный хардкод, т.к. денег на VPS нету...
 static const QString BASE_URL = "http://localhost:8000";
 
 PersonDialog::PersonDialog(const QString &token, QWidget *parent)

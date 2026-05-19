@@ -19,6 +19,7 @@
 #include <QJsonArray>
 #include <QScrollBar>
 
+// временный хардкод, т.к. денег на VPS нету...
 static const QString BASE_URL = "http://localhost:8000";
 
 MainWindow::MainWindow(const QString &token, QWidget *parent)
@@ -26,7 +27,7 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 {
     m_nam.setParent(this);
 
-    setWindowTitle("Помощник принятия решений");
+    setWindowTitle("MedDoc AI");
     resize(900, 600);
 
     auto *splitter = new QSplitter(Qt::Horizontal, this);

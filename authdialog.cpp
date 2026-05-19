@@ -7,6 +7,7 @@
 #include <QNetworkRequest>
 #include <QUrl>
 
+// временный хардкод, т.к. денег на VPS нету...
 static const QString BASE_URL = "http://localhost:8000";
 
 AuthDialog::AuthDialog(QWidget *parent)
@@ -23,7 +24,7 @@ QString AuthDialog::token() const { return m_token; }
 void AuthDialog::setupUi() {
     auto *layout = new QVBoxLayout(this);
 
-    auto *title = new QLabel("Помощник принятия решений");
+    auto *title = new QLabel("MedDoc AI");
     title->setAlignment(Qt::AlignCenter);
     title->setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 10px;");
     layout->addWidget(title);

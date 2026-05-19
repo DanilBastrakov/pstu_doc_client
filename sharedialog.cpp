@@ -13,6 +13,7 @@
 #include <QUrl>
 #include <QMessageBox>
 
+// временный хардкод, т.к. денег на VPS нету...
 static const QString BASE_URL = "http://localhost:8000";
 
 ShareDialog::ShareDialog(int personId, const QString &personName,
