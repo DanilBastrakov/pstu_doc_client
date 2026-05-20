@@ -18,7 +18,7 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
-from langchain_core.callbacks import CallbackManagerForRetrieverRun, StreamingStdOutCallbackHandler
+from langchain_core.callbacks import CallbackManagerForRetrieverRun
 
 
 class E5Embeddings(HuggingFaceEmbeddings):
@@ -44,8 +44,15 @@ CHROMA_PERSIST_DIR = "./chroma_db"                          # папка для 
 TOKENS_PER_CHUNK = 460       # safe margin below 512-token hard limit
 CHUNK_OVERLAP_TOKENS = 40    # overlap in tokens
 EMBEDDING_MODEL_NAME = "intfloat/multilingual-e5-small"
-LLM_MODEL_NAME = "mistral"                                  # модель Ollama (должна быть скачана)
+LLM_MODEL_NAME = "mistral"                                    # модель Ollama (должна быть скачана)
 # ==============================================
+
+def _auto_device() -> str:
+    try:
+        import torch
+        return "cuda" if torch.cuda.is_available() else "cpu"
+    except ImportError:
+        return "cpu"
 
 def load_documents(directory: str):
     """Рекурсивно загружает PDF (через pdfplumber) и TXT из папки."""
@@ -187,8 +194,6 @@ def build_index(docs_dir: str, persist_dir: str) -> tuple[Chroma | None, list[Do
 
     print(f"Загружено документов: {len(docs)}. Разбиваем на секции и чанки (гибрид)...")
     section_docs = _sectionize_documents(docs)
-    # SentenceTransformersTokenTextSplitter splits by actual tokens of the embedding
-    # model, preventing silent truncation at the model's 512-token hard limit.
     splitter = SentenceTransformersTokenTextSplitter(
         model_name=EMBEDDING_MODEL_NAME,
         tokens_per_chunk=TOKENS_PER_CHUNK,
@@ -198,10 +203,12 @@ def build_index(docs_dir: str, persist_dir: str) -> tuple[Chroma | None, list[Do
     print(f"Чанков: {len(chunks)}")
 
     print("Загружаем эмбеддинги (первый запуск может скачать модель)...")
+    device = _auto_device()
+    print(f"Эмбеддинги на устройстве: {device}")
     embeddings = E5Embeddings(
         model_name=EMBEDDING_MODEL_NAME,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
+        model_kwargs={"device": device},
+        encode_kwargs={"normalize_embeddings": True, "batch_size": 64},
     )
 
     print(f"Строим векторную БД в {persist_dir}...")
@@ -219,10 +226,11 @@ def load_existing_index(persist_dir: str) -> tuple[Chroma | None, list[Document]
     if not os.path.exists(persist_dir):
         return None, []
     print(f"Загружаем индекс из {persist_dir}...")
+    device = _auto_device()
     embeddings = E5Embeddings(
         model_name=EMBEDDING_MODEL_NAME,
-        model_kwargs={"device": "cpu"},
-        encode_kwargs={"normalize_embeddings": True},
+        model_kwargs={"device": device},
+        encode_kwargs={"normalize_embeddings": True, "batch_size": 64},
     )
     vectordb = Chroma(
         persist_directory=persist_dir,
@@ -254,7 +262,7 @@ def setup_rag_chain(vectordb, chunks: list[Document]):
     chroma_retriever = vectordb.as_retriever(search_kwargs={"k": 20})
 
     class HybridRetriever(BaseRetriever):
-        """RRF-ретривер, комбинирующий BM25 и Chroma."""
+        """ретривер, комбинирующий BM25 и Chroma."""
         bm25_retriever: BM25Retriever
         chroma_retriever: BaseRetriever
         k_const: int = 60
@@ -287,7 +295,7 @@ def setup_rag_chain(vectordb, chunks: list[Document]):
 
     print(f"Подключаем LLM Ollama: {LLM_MODEL_NAME}...")
     try:
-        llm = Ollama(model=LLM_MODEL_NAME, temperature=0.0, num_gpu=-1, num_thread=8, callbacks=[StreamingStdOutCallbackHandler()])
+        llm = Ollama(model=LLM_MODEL_NAME, temperature=0.0, num_gpu=12, num_thread=8)
     except Exception as e:
         print(f"Ошибка соединения с Ollama. Убедитесь, что сервер запущен и модель "
               f"'{LLM_MODEL_NAME}' скачана (ollama pull {LLM_MODEL_NAME}).\n{e}")
@@ -353,9 +361,15 @@ def main():
 
         print("Ищем и генерируем ответ...")
         try:
-            result = qa_chain.invoke({"query": query})
-            print(f"\nОтвет: {result['result']}\n")
-            sources = result.get("source_documents", [])
+            print("Ответ: ", end="", flush=True)
+            sources = []
+            for chunk in qa_chain.stream({"query": query}):
+                if "result" in chunk:
+                    content = chunk["result"]
+                    print(content, end="", flush=True)
+                if "source_documents" in chunk:
+                    sources = chunk["source_documents"]
+            print()
             if sources:
                 print("Источники:")
                 for i, doc in enumerate(sources[:3], 1):

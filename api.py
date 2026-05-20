@@ -12,10 +12,17 @@ if sys.stdout.encoding.lower() not in ("utf-8", "utf8"):
 
 os.environ["CHROMA_TELEMETRY"] = "false"
 os.environ["NO_CHROMA_TELEMETRY"] = "true"
+os.environ["POSTHOG_DISABLED"] = "1"
 
+import json
 import httpx
+import posthog
 import uvicorn
+
+# chromadb 0.5.5 calls capture() with args incompatible with posthog ≥7 — silence it
+posthog.capture = lambda *a, **kw: None
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 from langchain_community.retrievers import BM25Retriever
 from langchain_community.vectorstores import Chroma
@@ -32,6 +39,7 @@ from main import (
     CHROMA_PERSIST_DIR,
     EMBEDDING_MODEL_NAME,
     LLM_MODEL_NAME,
+
 )
 
 
@@ -46,15 +54,24 @@ qa_chain = None
 OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434")
 OLLAMA_TIMEOUT = int(os.environ.get("OLLAMA_TIMEOUT", "300"))
 
+_client: httpx.AsyncClient | None = None
+
+
+def _get_http_client() -> httpx.AsyncClient:
+    global _client
+    if _client is None:
+        _client = httpx.AsyncClient(base_url=OLLAMA_BASE_URL, timeout=OLLAMA_TIMEOUT)
+    return _client
+
 
 async def warm_up():
     try:
-        async with httpx.AsyncClient(proxy=None) as client:
-            await client.post(
-                f"{OLLAMA_BASE_URL}/api/generate",
-                json={"model": LLM_MODEL_NAME, "prompt": "ping", "stream": False},
-                timeout=30.0,
-            )
+        client = _get_http_client()
+        await client.post(
+            "/api/generate",
+            json={"model": LLM_MODEL_NAME, "prompt": "ping", "stream": False},
+            timeout=30.0,
+        )
     except Exception:
         pass
 
@@ -108,7 +125,6 @@ async def startup():
     if not os.path.exists(CHROMA_PERSIST_DIR):
         vectordb, chunks = build_index(DOCUMENTS_DIR, CHROMA_PERSIST_DIR)
     else:
-        print(" ::: " + CHROMA_PERSIST_DIR)
         vectordb, chunks = load_existing_index(CHROMA_PERSIST_DIR)
         if not vectordb:
             shutil.rmtree(CHROMA_PERSIST_DIR)
@@ -127,6 +143,14 @@ async def startup():
     await warm_up()
 
 
+@app.on_event("shutdown")
+async def shutdown():
+    global _client
+    if _client:
+        await _client.aclose()
+        _client = None
+
+
 @app.post("/api/generate")
 async def generate(req: GenerateRequest):
     augmented_prompt = req.prompt
@@ -140,53 +164,64 @@ async def generate(req: GenerateRequest):
                 )
                 augmented_prompt = f"{context}\n\n---\n\n{req.prompt}"
         except Exception as e:
-                import traceback
-                traceback.print_exc()
-                raise HTTPException(status_code=500, detail=str(e))
+            import traceback
+            traceback.print_exc()
+            raise HTTPException(status_code=500, detail=str(e))
 
-    async with httpx.AsyncClient(proxy=None) as client:
+    async def event_stream():
+        client = _get_http_client()
         models_to_try = [req.model]
         if req.model != LLM_MODEL_NAME:
             models_to_try.append(LLM_MODEL_NAME)
+
         for attempt_model in models_to_try:
-            response = await client.post(
-                f"{OLLAMA_BASE_URL}/api/generate",
-                json={
-                    "model": attempt_model,
-                    "prompt": augmented_prompt,
-                    "stream": False,
-                },
-                timeout=OLLAMA_TIMEOUT,
-            )
-            if response.status_code == 200:
-                return response.json()
-        response.raise_for_status()
+            async with client.stream(
+                "POST", "/api/generate",
+                json={"model": attempt_model, "prompt": augmented_prompt, "stream": True},
+            ) as resp:
+                if resp.status_code != 200:
+                    if attempt_model == models_to_try[-1]:
+                        yield f"event: error\ndata: {json.dumps({'error': f'Ollama returned {resp.status_code}'})}\n\n"
+                        yield "event: done\ndata: []\n\n"
+                    continue
+                async for line in resp.aiter_lines():
+                    if line.strip():
+                        data = json.loads(line)
+                        event_type = "done" if data.get("done") else "token"
+                        yield f"event: {event_type}\ndata: {json.dumps(data)}\n\n"
+                        if data.get("done"):
+                            return
+                return
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @app.get("/api/models")
 async def models():
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"{OLLAMA_BASE_URL}/api/tags")
-        response.raise_for_status()
-        data = response.json()
-        return [model["name"] for model in data.get("models", [])]
+    client = _get_http_client()
+    response = await client.get("/api/tags")
+    response.raise_for_status()
+    data = response.json()
+    return [model["name"] for model in data.get("models", [])]
 
 
 @app.post("/api/rag/ask")
 async def ask(req: AskRequest):
     if not qa_chain:
         raise HTTPException(status_code=503, detail="RAG index not loaded or LLM unavailable")
-    result = qa_chain.invoke({"query": req.question})
-    return {
-        "answer": result["result"],
-        "sources": [
-            {
-                "source": doc.metadata.get("source", ""),
-                "content": doc.page_content[:500],
-            }
-            for doc in result.get("source_documents", [])
-        ],
-    }
+
+    async def event_stream():
+        sources = []
+        async for chunk in qa_chain.astream({"query": req.question}):
+            if "result" in chunk:
+                yield f"event: token\ndata: {json.dumps({'token': chunk['result']})}\n\n"
+            if "source_documents" in chunk:
+                sources = chunk["source_documents"]
+        if sources:
+            yield f"event: sources\ndata: {json.dumps([{'source': d.metadata.get('source', ''), 'content': d.page_content[:500]} for d in sources])}\n\n"
+        yield "event: done\ndata: []\n\n"
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @app.get("/health")
