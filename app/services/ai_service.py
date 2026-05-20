@@ -1,5 +1,6 @@
 import httpx
 import json
+from typing import AsyncGenerator
 
 from app.config import settings
 
@@ -23,6 +24,40 @@ async def generate_text(prompt: str, model: str = "mistral", language: str = "ru
         )
         response.raise_for_status()
         return response.json()
+
+
+async def generate_text_stream(
+    prompt: str,
+    model: str = "mistral",
+    language: str = "russian",
+) -> AsyncGenerator[tuple[str, str], None]:
+    language_instruction = (
+        "Отвечайте на русском языке.\n\n"
+        if language == "russian"
+        else "Respond in English.\n\n"
+    )
+    async with httpx.AsyncClient() as client:
+        async with client.stream(
+            "POST",
+            f"{settings.ai_service_url}/api/generate",
+            json={
+                "prompt": language_instruction + prompt,
+                "model": model,
+                "language": language,
+                "use_rag": True,
+                "stream": True,
+            },
+            timeout=300.0,
+        ) as response:
+            response.raise_for_status()
+            current_event = None
+            async for line in response.aiter_lines():
+                line = line.strip()
+                if line.startswith("event: "):
+                    current_event = line[7:]
+                elif line.startswith("data: ") and current_event:
+                    yield (current_event, line[6:])
+                    current_event = None
 
 
 async def list_models() -> list[str]:
@@ -266,6 +301,75 @@ async def predict_diseases(
     prompt = build_disease_prompt(person_data, existing_diagnoses, language)
 
     result = await generate_text(prompt, model, language)
+    response_text = result.get("response", "")
+
+    try:
+        start = response_text.find("{")
+        end = response_text.rfind("}") + 1
+        if start >= 0 and end > start:
+            json_str = response_text[start:end]
+            parsed = json.loads(json_str)
+        else:
+            parsed = json.loads(response_text)
+    except (json.JSONDecodeError, ValueError):
+        parsed = {
+            "analysis_summary": "Failed to parse AI response",
+            "predictions": [],
+            "recommendations": "Не удалось сгенерировать рекомендации",
+            "risk_factors_identified": risk_factors,
+        }
+
+    return {
+        "person_id": person_data.get("id"),
+        "person_name": person_data.get("name", "Unknown"),
+        "analysis_summary": parsed.get("analysis_summary", ""),
+        "predictions": parsed.get("predictions", []),
+        "recommendations": parsed.get("recommendations", ""),
+        "risk_factors_identified": parsed.get("risk_factors_identified", risk_factors),
+    }
+
+
+async def append_and_predict(
+    prompt: str,
+    person_data: dict,
+    existing_diagnoses: list,
+    model: str = "mistral",
+    language: str = "russian",
+) -> dict:
+    symptoms = person_data.get("symptoms") or []
+    if not isinstance(symptoms, list):
+        symptoms = []
+    lifestyle = person_data.get("lifestyle") or {}
+    if not isinstance(lifestyle, dict):
+        lifestyle = {}
+    past_conditions = person_data.get("past_conditions") or {}
+    if not isinstance(past_conditions, dict):
+        past_conditions = {}
+
+    risk_factors = []
+    if lifestyle.get("smoking") and lifestyle.get("smoking") != "no":
+        risk_factors.append(f"smoking: {lifestyle['smoking']}")
+    if lifestyle.get("alcohol") and lifestyle.get("alcohol") != "no":
+        risk_factors.append(f"alcohol: {lifestyle['alcohol']}")
+    if lifestyle.get("stress") and lifestyle.get("stress") != "low":
+        risk_factors.append(f"stress level: {lifestyle['stress']}")
+    if lifestyle.get("exercise") and lifestyle.get("exercise") in ("none", "low"):
+        risk_factors.append(f"low physical activity: {lifestyle['exercise']}")
+    if lifestyle.get("diet") and lifestyle.get("diet") in ("poor", "unhealthy"):
+        risk_factors.append(f"poor diet: {lifestyle['diet']}")
+    if lifestyle.get("sleep") and lifestyle.get("sleep") in ("poor", "insufficient"):
+        risk_factors.append(f"sleep issues: {lifestyle['sleep']}")
+
+    past_conditions_list = past_conditions.get("conditions") or []
+    family_history = past_conditions.get("family_history") or []
+    if family_history:
+        risk_factors.append(f"family history: {', '.join(family_history)}")
+    if past_conditions_list:
+        risk_factors.append(f"past conditions: {', '.join(past_conditions_list)}")
+
+    full_prompt = append_prediction_prompt(prompt, person_data, existing_diagnoses, language)
+
+    result = await generate_text(full_prompt, model, language)
     response_text = result.get("response", "")
 
     try:
