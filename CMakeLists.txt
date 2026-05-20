@@ -33,3 +33,11 @@ target_link_libraries(pstu_doc_client
         Qt5::Network
 )
 
+add_custom_target(update_style ALL
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        ${CMAKE_SOURCE_DIR}/style.qss
+        ${CMAKE_BINARY_DIR}/style.qss
+    COMMENT "Updating style.qss"
+)
+add_dependencies(pstu_doc_client update_style)
+

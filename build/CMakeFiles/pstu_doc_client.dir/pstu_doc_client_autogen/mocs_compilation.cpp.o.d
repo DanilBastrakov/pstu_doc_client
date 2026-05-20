@@ -427,6 +427,13 @@ CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollarea.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QCheckBox \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qcheckbox.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QJsonObject \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonobject.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonvalue.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qcborvalue.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qcborcommon.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/quuid.h \
  /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/EWIEGA46WW/moc_persondialog.cpp \
  /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/EWIEGA46WW/../../../persondialog.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QSpinBox \

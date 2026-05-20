@@ -137,6 +137,19 @@ pstu_doc_client/fast:
 .PHONY : pstu_doc_client/fast
 
 #=============================================================================
+# Target rules for targets named update_style
+
+# Build rule for target.
+update_style: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 update_style
+.PHONY : update_style
+
+# fast build rule for target.
+update_style/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/update_style.dir/build.make CMakeFiles/update_style.dir/build
+.PHONY : update_style/fast
+
+#=============================================================================
 # Target rules for targets named pstu_doc_client_autogen_timestamp_deps
 
 # Build rule for target.
@@ -341,6 +354,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... pstu_doc_client_autogen"
 	@echo "... pstu_doc_client_autogen_timestamp_deps"
+	@echo "... update_style"
 	@echo "... pstu_doc_client"
 	@echo "... authdialog.o"
 	@echo "... authdialog.i"

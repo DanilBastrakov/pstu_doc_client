@@ -32,50 +32,60 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 
     auto *splitter = new QSplitter(Qt::Horizontal, this);
 
-    // Sidebar container
     auto *sidebar = new QWidget();
+    sidebar->setObjectName("sidebar");
     auto *sidebarLayout = new QVBoxLayout(sidebar);
     sidebarLayout->setContentsMargins(0, 0, 0, 0);
     sidebarLayout->setSpacing(0);
 
-    // Persons panel
     m_personPanel = new CollapsiblePanel(QString::fromUtf8("Пациенты"));
     auto *personContent = new QVBoxLayout();
     personContent->setContentsMargins(0, 0, 0, 0);
 
     m_personsList = new QListWidget();
     connect(m_personsList, &QListWidget::currentItemChanged, this, &MainWindow::onPersonSelectionChanged);
-    personContent->addWidget(m_personsList);
+    personContent->addWidget(m_personsList, 1);
+    auto *personBtnRow1 = new QHBoxLayout();
+    personBtnRow1->setSpacing(button_spacing);
+    auto *personBtnRow2 = new QHBoxLayout();
+    personBtnRow2->setSpacing(button_spacing);
 
-    auto *personBtnRow = new QHBoxLayout();
     auto *addPersonBtn = new QPushButton(QString::fromUtf8("Добавить пациента"));
+    addPersonBtn->setObjectName("addPersonBtn");
     auto *sharePersonBtn = new QPushButton(QString::fromUtf8("Поделиться"));
+    sharePersonBtn->setObjectName("sharePersonBtn");
     auto *editPersonBtn = new QPushButton(QString::fromUtf8("Редактировать"));
+    editPersonBtn->setObjectName("editPersonBtn");
     auto *removePersonBtn = new QPushButton(QString::fromUtf8("Удалить пациента"));
-    personBtnRow->addWidget(addPersonBtn);
-    personBtnRow->addWidget(sharePersonBtn);
-    personBtnRow->addWidget(editPersonBtn);
-    personBtnRow->addWidget(removePersonBtn);
-    personContent->addLayout(personBtnRow);
+    removePersonBtn->setObjectName("removePersonBtn");
+    personBtnRow1->addWidget(addPersonBtn);
+    personBtnRow1->addWidget(sharePersonBtn);
+    personBtnRow2->addWidget(editPersonBtn);
+    personBtnRow2->addWidget(removePersonBtn);
 
     m_personPanel->setContentLayout(personContent);
-    sidebarLayout->addWidget(m_personPanel);
+    sidebarLayout->addWidget(m_personPanel, 1);
 
-    // Logout at bottom
-    sidebarLayout->addStretch();
+
+    sidebarLayout->addLayout(personBtnRow1);
+    sidebarLayout->setSpacing(button_spacing);
+    sidebarLayout->addLayout(personBtnRow2);
+
     auto *logoutBtn = new QPushButton(QString::fromUtf8("Выход"));
+    logoutBtn->setObjectName("logoutBtn");
     sidebarLayout->addWidget(logoutBtn);
 
     splitter->addWidget(sidebar);
 
-    // Chat area
     auto *mainArea = new QWidget();
+    mainArea->setObjectName("mainArea");
     auto *mainLayout = new QVBoxLayout(mainArea);
     mainLayout->setContentsMargins(0, 0, 0, 0);
 
     m_scrollArea = new QScrollArea();
     m_scrollArea->setWidgetResizable(true);
     auto *messagesWidget = new QWidget();
+    messagesWidget->setObjectName("messagesWidget");
     m_messagesLayout = new QVBoxLayout(messagesWidget);
     m_messagesLayout->setAlignment(Qt::AlignTop);
     auto *messagesLabel = new QLabel(QString::fromUtf8("Сообщения чата будут здесь"));
@@ -94,6 +104,7 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
     m_sendBtn = new QPushButton(QString::fromUtf8("Отправить"));
     m_sendBtn->setEnabled(false);
     m_predictBtn = new QPushButton(QString::fromUtf8("Прогноз"));
+    m_predictBtn->setObjectName("predictBtn");
     m_predictBtn->setEnabled(false);
     inputRow->addWidget(m_inputBar);
     inputRow->addWidget(m_historyCheck);
@@ -109,7 +120,7 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 
     splitter->setStretchFactor(0, 0);
     splitter->setStretchFactor(1, 1);
-    splitter->setSizes({250, 650});
+    splitter->setSizes({350, 550});
 
     setCentralWidget(splitter);
 
@@ -285,13 +296,13 @@ void MainWindow::appendMessage(const QString &text, bool isUser) {
 
     if (isUser) {
         bubble->setStyleSheet(
-            "background-color: #007AFF; color: white; "
+            "background-color: #2081c3; color: #f7f9f9; "
             "border-radius: 10px; padding: 8px;");
         bubble->setAlignment(Qt::AlignRight);
     } else {
         bubble->setStyleSheet(
-            "background-color: #E8E8E8; color: black; "
-            "border-radius: 10px; padding: 8px;");
+            "background-color: #f7f9f9; color: #000000; "
+            "border: 1px solid #bed8d4; border-radius: 10px; padding: 8px;");
         bubble->setAlignment(Qt::AlignLeft);
     }
 
@@ -313,6 +324,8 @@ void MainWindow::appendMessage(const QString &text, bool isUser) {
 }
 
 void MainWindow::clearChatDisplay() {
+    m_streamingBubble = nullptr;
+    m_streamAccumulator.clear();
     QLayoutItem *child;
     while ((child = m_messagesLayout->takeAt(0)) != nullptr) {
         if (child->widget())
@@ -323,6 +336,40 @@ void MainWindow::clearChatDisplay() {
     placeholder->setObjectName("placeholder");
     placeholder->setAlignment(Qt::AlignCenter);
     m_messagesLayout->addWidget(placeholder);
+}
+
+QLabel* MainWindow::createStreamingBubble() {
+    QLayoutItem *first = m_messagesLayout->itemAt(0);
+    if (first) {
+        QWidget *w = first->widget();
+        if (w && qobject_cast<QLabel *>(w) &&
+            w->objectName() == "placeholder")
+        {
+            delete w;
+        }
+    }
+
+    auto *bubble = new QLabel();
+    bubble->setWordWrap(true);
+    bubble->setMaximumWidth(400);
+    bubble->setContentsMargins(8, 6, 8, 6);
+    bubble->setStyleSheet(
+        "background-color: #f7f9f9; color: #000000; "
+        "border: 1px solid #bed8d4; border-radius: 10px; padding: 8px;");
+    bubble->setAlignment(Qt::AlignLeft);
+
+    auto *container = new QWidget();
+    auto *containerLayout = new QHBoxLayout(container);
+    containerLayout->setContentsMargins(0, 2, 0, 2);
+    containerLayout->addWidget(bubble);
+    containerLayout->addStretch();
+
+    m_messagesLayout->addWidget(container);
+
+    QScrollBar *sb = m_scrollArea->verticalScrollBar();
+    sb->setValue(sb->maximum());
+
+    return bubble;
 }
 
 void MainWindow::onPersonSelectionChanged(QListWidgetItem *current, QListWidgetItem *previous) {
@@ -341,7 +388,7 @@ void MainWindow::onPersonSelectionChanged(QListWidgetItem *current, QListWidgetI
     m_currentPersonId = current->data(Qt::UserRole).toInt();
     m_inputBar->setEnabled(true);
     m_sendBtn->setEnabled(true);
-    //m_predictBtn->setEnabled(true);
+    m_predictBtn->setEnabled(true);
 
     // Fetch chat history for this person
     QUrl url(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
@@ -376,7 +423,6 @@ void MainWindow::onSendClicked() {
     appendMessage(text, true);
     m_inputBar->clear();
 
-    // Step 1: save message to chat history
     QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
     QNetworkRequest chatReq(chatUrl);
     chatReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
@@ -392,40 +438,12 @@ void MainWindow::onSendClicked() {
         if (chatReply->error() != QNetworkReply::NoError)
             return;
 
-        // Step 2: get enriched prompt
-        QString appendUrl = BASE_URL + QString("/api/ai/append_and_generate/%1").arg(m_currentPersonId);
-        QUrl url(appendUrl);
-        QNetworkRequest appendReq(url);
-        appendReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-        appendReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
-        QJsonObject appendBody;
-        appendBody["prompt"] = text;
-        appendBody["include_history"] = m_historyCheck->isChecked();
-
-        QNetworkReply *appendReply = m_nam.post(appendReq, QJsonDocument(appendBody).toJson(QJsonDocument::Compact));
-        connect(appendReply, &QNetworkReply::finished, this, [this, appendReply]() {
-                appendReply->deleteLater();
-                if (appendReply->error() != QNetworkReply::NoError)
-                    return;
-
-                QJsonObject obj = QJsonDocument::fromJson(appendReply->readAll()).object();
-                QString response = obj.value("response").toString();
-                if (!response.isEmpty()) {
-                    QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
-                    QNetworkRequest chatReq(chatUrl);
-                    chatReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-                    chatReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-                    QJsonObject chatBody;
-                    chatBody["role"] = "assistant";
-                    chatBody["content"] = response;
-                    QNetworkReply *chatReply = m_nam.post(chatReq, QJsonDocument(chatBody).toJson(QJsonDocument::Compact));
-                    connect(chatReply, &QNetworkReply::finished, chatReply, &QNetworkReply::deleteLater);
-
-                    appendMessage(response, false);
-                }
-
-            });
+        QJsonObject body;
+        body["prompt"] = text;
+        body["include_history"] = m_historyCheck->isChecked();
+        startAiStream(
+            QString("/api/ai/append_and_generate/stream/%1").arg(m_currentPersonId),
+            body);
     });
 }
 
@@ -444,46 +462,101 @@ void MainWindow::onPredictClicked() {
     QNetworkReply *chatReply = m_nam.post(chatReq, QJsonDocument(chatBody).toJson(QJsonDocument::Compact));
     connect(chatReply, &QNetworkReply::finished, chatReply, &QNetworkReply::deleteLater);
 
-    QUrl appendUrl(BASE_URL + QString("/api/ai/append_prediction/%1").arg(m_currentPersonId));
-    QNetworkRequest appendReq(appendUrl);
-    appendReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    appendReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
+    QJsonObject body;
+    body["prompt"] = QString::fromUtf8("Запрос прогноза");
+    startAiStream(
+        QString("/api/ai/append_and_generate_prediction/stream/%1").arg(m_currentPersonId),
+        body);
+}
 
-    QJsonObject appendBody;
-    appendBody["prompt"] = QString::fromUtf8("Запрос прогноза");
+void MainWindow::startAiStream(const QString &path, const QJsonObject &body) {
+    m_streamingBubble = createStreamingBubble();
+    m_streamAccumulator.clear();
+    m_streamPersonId = m_currentPersonId;
 
-    QNetworkReply *appendReply = m_nam.post(appendReq, QJsonDocument(appendBody).toJson(QJsonDocument::Compact));
-    connect(appendReply, &QNetworkReply::finished, this, [this, appendReply]() {
-        appendReply->deleteLater();
-        if (appendReply->error() != QNetworkReply::NoError)
+    QUrl url(BASE_URL + path);
+    QNetworkRequest req(url);
+    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
+
+    QNetworkReply *reply = m_nam.post(req, QJsonDocument(body).toJson(QJsonDocument::Compact));
+
+    connect(reply, &QNetworkReply::readyRead, this, [this, reply]() {
+        if (m_streamPersonId != m_currentPersonId) {
+            reply->abort();
+            reply->deleteLater();
             return;
+        }
 
-        QJsonObject appendObj = QJsonDocument::fromJson(appendReply->readAll()).object();
-        QString retrievedPrompt = appendObj.value("prompt").toString();
-        if (retrievedPrompt.isEmpty())
+        m_streamAccumulator += QString::fromUtf8(reply->readAll()).remove('\r');
+
+        int idx;
+        while ((idx = m_streamAccumulator.indexOf("\n\n")) != -1) {
+            QString event = m_streamAccumulator.left(idx);
+            m_streamAccumulator = m_streamAccumulator.mid(idx + 2);
+
+            QString dataValue;
+            for (const QString &line : event.split('\n'))
+                if (line.startsWith("data: "))
+                    dataValue = line.mid(6);
+
+            if (dataValue.trimmed() == "[DONE]" || dataValue.isEmpty())
+                continue;
+
+            QString chunk;
+            if (dataValue.startsWith('{')) {
+                QJsonDocument doc = QJsonDocument::fromJson(dataValue.toUtf8());
+                if (doc.isObject())
+                    chunk = doc.object().value("response").toString();
+            } else {
+                chunk = dataValue;
+            }
+
+            if (!chunk.isEmpty() && m_streamingBubble)
+                m_streamingBubble->setText(m_streamingBubble->text() + chunk);
+        }
+    });
+
+    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
+        reply->deleteLater();
+        if (reply->error() != QNetworkReply::NoError) {
+            m_streamingBubble = nullptr;
+            m_streamAccumulator.clear();
             return;
-
-        QUrl aiUrl("http://localhost:8001/api/generate");
-        QNetworkRequest aiReq(aiUrl);
-        aiReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
-        QJsonObject aiBody;
-        aiBody["prompt"] = retrievedPrompt;
-        aiBody["model"] = "mistral";
-        aiBody["language"] = "russian";
-        aiBody["use_rag"] = true;
-
-        QNetworkReply *aiReply = m_nam.post(aiReq, QJsonDocument(aiBody).toJson(QJsonDocument::Compact));
-        connect(aiReply, &QNetworkReply::finished, this, [this, aiReply]() {
-            aiReply->deleteLater();
-            if (aiReply->error() != QNetworkReply::NoError)
-                return;
-
-            QJsonObject obj = QJsonDocument::fromJson(aiReply->readAll()).object();
-            QString response = obj.value("response").toString();
-            if (!response.isEmpty())
-                appendMessage(response, false);
-        });
+        }
+        if (!m_streamAccumulator.trimmed().isEmpty() &&
+            m_streamAccumulator.trimmed() != "[DONE]" && m_streamingBubble)
+        {
+            QString dataValue;
+            for (const QString &line : m_streamAccumulator.split('\n'))
+                if (line.startsWith("data: "))
+                    dataValue = line.mid(6);
+            if (!dataValue.isEmpty() && dataValue != "[DONE]") {
+                QString chunk;
+                if (dataValue.startsWith('{')) {
+                    QJsonDocument doc = QJsonDocument::fromJson(dataValue.toUtf8());
+                    if (doc.isObject())
+                        chunk = doc.object().value("response").toString();
+                } else {
+                    chunk = dataValue;
+                }
+                if (!chunk.isEmpty())
+                    m_streamingBubble->setText(m_streamingBubble->text() + chunk);
+            }
+        }
+        if (m_streamingBubble && !m_streamingBubble->text().isEmpty()) {
+            QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
+            QNetworkRequest chatReq(chatUrl);
+            chatReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+            chatReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
+            QJsonObject chatBody;
+            chatBody["role"] = "assistant";
+            chatBody["content"] = m_streamingBubble->text();
+            QNetworkReply *chatReply = m_nam.post(chatReq, QJsonDocument(chatBody).toJson(QJsonDocument::Compact));
+            connect(chatReply, &QNetworkReply::finished, chatReply, &QNetworkReply::deleteLater);
+        }
+        m_streamingBubble = nullptr;
+        m_streamAccumulator.clear();
     });
 }
 

@@ -101,6 +101,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/pstu_doc_client.dir/DependInfo.cmake"
+  "CMakeFiles/update_style.dir/DependInfo.cmake"
   "CMakeFiles/pstu_doc_client_autogen_timestamp_deps.dir/DependInfo.cmake"
   "CMakeFiles/pstu_doc_client_autogen.dir/DependInfo.cmake"
   )

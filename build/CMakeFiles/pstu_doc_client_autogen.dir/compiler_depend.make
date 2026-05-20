@@ -301,6 +301,7 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
   /usr/include/x86_64-linux-gnu/gnu/stubs.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QFlags \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QJsonObject \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/QSharedDataPointer \
@@ -318,6 +319,8 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qbasictimer.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearray.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qbytearraylist.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcborcommon.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcborvalue.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qchar.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qcompilerdetection.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qconfig.h \
@@ -337,6 +340,8 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonobject.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonvalue.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qline.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qlocale.h \
@@ -376,6 +381,7 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qtimer.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qtypeinfo.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qurl.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/quuid.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qvarlengtharray.h \
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qvector.h \
@@ -750,6 +756,12 @@ pstu_doc_client_autogen/timestamp: /home/admin-debian/CLionProjects/pstu_doc_cli
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qlogging.h:
 
+/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h:
+
 /usr/include/c++/14/concepts:
 
 /usr/include/c++/14/bits/vector.tcc:
@@ -1080,9 +1092,13 @@ CMakeFiles/4.3.2/CMakeCCompiler.cmake:
 
 /snap/cmake/current/share/cmake-4.3/Modules/Platform/Linker/Linux-GNU-C.cmake:
 
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonvalue.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/c++/14/bits/algorithmfwd.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonobject.h:
 
 /usr/include/c++/14/bits/stl_iterator_base_types.h:
 
@@ -1091,8 +1107,6 @@ CMakeFiles/4.3.2/CMakeCCompiler.cmake:
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h:
 
 /usr/include/c++/14/bits/char_traits.h:
-
-/usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qfontinfo.h:
 
@@ -1109,6 +1123,8 @@ CMakeFiles/4.3.2/CMakeCCompiler.cmake:
 /snap/cmake/current/share/cmake-4.3/Modules/Platform/Linker/Linux-GNU-CXX.cmake:
 
 /snap/cmake/current/share/cmake-4.3/Modules/Compiler/GNU-CXX.cmake:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/quuid.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qlist.h:
 
@@ -1199,6 +1215,8 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 /usr/include/c++/14/bits/exception_ptr.h:
 
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qcborcommon.h:
 
 /snap/cmake/current/share/cmake-4.3/Modules/CMakeSystemSpecificInformation.cmake:
 
@@ -1340,6 +1358,10 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/floatn-common.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h:
+
+/usr/include/c++/14/typeinfo:
+
 /usr/include/c++/14/unordered_map:
 
 /snap/cmake/current/share/cmake-4.3/Modules/Linker/GNU-C.cmake:
@@ -1363,10 +1385,6 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 /usr/include/linux/types.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qglobal.h:
-
-/usr/lib/x86_64-linux-gnu/cmake/Qt5Widgets/Qt5WidgetsConfigExtras.cmake:
-
-/usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h:
 
 /usr/include/locale.h:
 
@@ -1462,6 +1480,8 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qcborvalue.h:
+
 /usr/include/x86_64-linux-gnu/c++/14/bits/gthr.h:
 
 /usr/lib/gcc/x86_64-linux-gnu/14/include/limits.h:
@@ -1477,6 +1497,8 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 /usr/include/x86_64-linux-gnu/bits/types/struct_itimerspec.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qsize.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/QJsonObject:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_tm.h:
 
@@ -1567,7 +1589,3 @@ CMakeFiles/4.3.2/CMakeCXXCompiler.cmake:
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qglobalstatic.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qhash.h:
-
-/usr/include/c++/14/typeinfo:
-
-/usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h:

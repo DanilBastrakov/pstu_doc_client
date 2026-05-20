@@ -1,9 +1,16 @@
 #include <QApplication>
+#include <QFile>
 #include "authdialog.h"
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
+
+    QFile styleFile("style.qss");
+    if (styleFile.open(QFile::ReadOnly)) {
+        app.setStyleSheet(styleFile.readAll());
+        styleFile.close();
+    }
 
     AuthDialog authDialog;
     if (authDialog.exec() != QDialog::Accepted)

@@ -9,16 +9,11 @@ CollapsiblePanel::CollapsiblePanel(const QString &title, QWidget *parent)
     mainLayout->setSpacing(0);
 
     m_headerBtn = new QPushButton();
-    m_headerBtn->setStyleSheet(
-        "QPushButton { text-align: left; padding: 8px; font-weight: bold;"
-        "  border: none; border-bottom: 1px solid #ccc; background: #f0f0f0; }"
-        "QPushButton:hover { background: #e0e0e0; }"
-    );
     m_headerBtn->setCursor(Qt::PointingHandCursor);
     mainLayout->addWidget(m_headerBtn);
 
     m_content = new QWidget();
-    mainLayout->addWidget(m_content);
+    mainLayout->addWidget(m_content, 1);
 
     connect(m_headerBtn, &QPushButton::clicked, this, [this]() {
         setCollapsed(!m_collapsed);

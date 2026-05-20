@@ -10,6 +10,8 @@
 #include <QScrollArea>
 #include <QPushButton>
 #include <QCheckBox>
+#include <QLabel>
+#include <QJsonObject>
 
 class CollapsiblePanel;
 
@@ -34,18 +36,23 @@ private:
     void loadPersons();
     void appendMessage(const QString &text, bool isUser);
     void clearChatDisplay();
+    QLabel* createStreamingBubble();
+    void startAiStream(const QString &path, const QJsonObject &body);
 
     QString m_token;
     int m_currentPersonId = -1;
+    int button_spacing = 2;
     QNetworkAccessManager m_nam;
+
+    QLabel *m_streamingBubble = nullptr;
+    QString m_streamAccumulator;
+    int m_streamPersonId = -1;
 
     QTimer *m_refreshTimer;
 
-    // persons panel
     CollapsiblePanel *m_personPanel;
     QListWidget *m_personsList;
 
-    // chat area
     QLineEdit *m_inputBar;
     QPushButton *m_sendBtn;
     QPushButton *m_predictBtn;
