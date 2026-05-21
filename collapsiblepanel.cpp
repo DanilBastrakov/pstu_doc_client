@@ -1,16 +1,21 @@
 #include "collapsiblepanel.h"
 #include <QHBoxLayout>
 
-CollapsiblePanel::CollapsiblePanel(const QString &title, QWidget *parent)
+CollapsiblePanel::CollapsiblePanel(const QString &title, QPushButton button, QWidget *parent)
     : QWidget(parent), m_title(title)
 {
     auto *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->setSpacing(0);
 
+
+    auto hBox = new QHBoxLayout();
     m_headerBtn = new QPushButton();
     m_headerBtn->setCursor(Qt::PointingHandCursor);
-    mainLayout->addWidget(m_headerBtn);
+    hBox->addWidget(m_headerBtn);
+    hBox->setSpacing(10);
+    hBox->addWidget(&button);
+    mainLayout->addLayout(hBox);
 
     m_content = new QWidget();
     mainLayout->addWidget(m_content, 1);

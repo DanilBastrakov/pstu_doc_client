@@ -38,7 +38,10 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
     sidebarLayout->setContentsMargins(0, 0, 0, 0);
     sidebarLayout->setSpacing(0);
 
-    m_personPanel = new CollapsiblePanel(QString::fromUtf8("Пациенты"));
+    auto *refreshPatientsBtn = new QPushButton(QString::fromUtf8("Обновить"));
+    refreshPatientsBtn->setObjectName("refreshPatientBtn");
+
+    m_personPanel = new CollapsiblePanel(QString::fromUtf8("Пациенты"), QPushButton(refreshPatientsBtn));
     auto *personContent = new QVBoxLayout();
     personContent->setContentsMargins(0, 0, 0, 0);
 

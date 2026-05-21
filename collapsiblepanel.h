@@ -9,7 +9,9 @@
 class CollapsiblePanel : public QWidget {
     Q_OBJECT
 public:
-    explicit CollapsiblePanel(const QString &title, QWidget *parent = nullptr);
+    CollapsiblePanel(const QString &title, QPushButton button, QWidget *parent = nullptr);
+
+    //CollapsiblePanel(const QString &title, QWidget button, QWidget *parent);
 
     void setContentLayout(QVBoxLayout *layout);
     QVBoxLayout *contentLayout() const;
