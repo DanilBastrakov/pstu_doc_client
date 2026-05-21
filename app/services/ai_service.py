@@ -177,28 +177,30 @@ def build_disease_prompt(
 
 {existing_diagnoses_text}
 
-На основе ВСЕЙ вышеуказанной информации предоставьте комплексный медицинский анализ. Верните ТОЛЬКО корректный JSON-объект с точной структурой:
+На основе ВСЕЙ вышеуказанной информации предоставьте комплексный медицинский анализ. IF THERE ARE NO SYMPTOMS LISTED THAT MEANS THAT THERE ARE NONE. Верните результат в виде обычного текстового списка (без JSON, без маркдауна):
 
-{{
-  "analysis_summary": "Краткое описание общего состояния здоровья пациента",
-  "predictions": [
-    {{
-      "disease": "Название заболевания",
-      "probability": 0.85,
-      "contributing_factors": ["фактор1", "фактор2"],
-      "explanation": "Почему это заболевание вероятно"
-    }}
-  ],
-  "recommendations": "Общие рекомендации для пациента",
-  "risk_factors_identified": ["риск1", "риск2"]
-}}
+---
+АНАЛИЗ:
+<краткое описание общего состояния здоровья пациента>
+
+ЗАБОЛЕВАНИЯ:
+1. <Название заболевания> — Вероятность: <число>%
+   Факторы: <фактор1, фактор2>
+   Объяснение: <почему это заболевание вероятно>
+2. ...
+
+РЕКОМЕНДАЦИИ:
+<общие рекомендации для пациента>
+
+ФАКТОРЫ РИСКА:
+- <риск1>
+- <риск2>
+---
 
 Правила:
 - Включите 3-8 заболеваний, отсортированных по вероятности (наиболее вероятные первыми)
-- Вероятность должна быть от 0.0 до 1.0
 - Учитывайте возраст, пол, образ жизни, семейный анамнез, симптомы и прошлые заболевания
 - Используйте медицинские знания для корреляции всех факторов
-- Верните ТОЛЬКО корректный JSON, без разметки, без дополнительного текста
 - Ты — врач. Используй профессиональную терминологию, не упрощай
 - Отвечай максимально развернуто, но не придумывай
 - ЗАПРЕЩЕНО добавлять дисклеймеры: "нужна консультация врача", "обратитесь к специалисту", "рекомендуется посетить врача" и т.п.
@@ -230,28 +232,30 @@ PAST CONDITIONS:
 
 {existing_diagnoses_text}
 
-Based on ALL of the above information, provide a comprehensive medical analysis. Return ONLY a valid JSON object with this exact structure:
+Based on ALL of the above information, provide a comprehensive medical analysis. IF THERE ARE NO SYMPTOMS LISTED THAT MEANS THAT THERE ARE NONE. Return the result as a plain text list (NO JSON, NO markdown):
 
-{{
-  "analysis_summary": "Brief summary of the patient's overall health situation",
-  "predictions": [
-    {{
-      "disease": "Disease name",
-      "probability": 0.85,
-      "contributing_factors": ["factor1", "factor2"],
-      "explanation": "Why this disease is likely"
-    }}
-  ],
-  "recommendations": "General recommendations for the patient",
-  "risk_factors_identified": ["risk1", "risk2"]
-}}
+---
+ANALYSIS:
+<brief summary of the patient's overall health situation>
+
+DISEASES:
+1. <Disease name> — Probability: <number>%
+   Factors: <factor1, factor2>
+   Explanation: <why this disease is likely>
+2. ...
+
+RECOMMENDATIONS:
+<general recommendations for the patient>
+
+RISK FACTORS:
+- <risk1>
+- <risk2>
+---
 
 Rules:
-- Include 3-8 diseases sorted by probability (highest first)
-- Probability should be between 0.0 and 1.0
+- Include 3-5 diseases sorted by probability (highest first)
 - Consider age, gender, lifestyle, family history, symptoms, and past conditions
 - Use medical knowledge to correlate all factors
-- Return ONLY valid JSON, no markdown, no extra text
 - You are addressing a doctor. Use professional medical terminology, do not simplify
 - Answer concisely, do not fabricate
 - Do NOT add disclaimers like "consult a doctor", "seek medical advice", "talk to your physician", etc.

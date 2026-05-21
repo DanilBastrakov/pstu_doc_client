@@ -2,8 +2,6 @@ from pydantic import BaseModel
 from datetime import datetime
 from typing import Optional, List
 
-from sqlalchemy import false
-
 
 class UserCreate(BaseModel):
     username: str
@@ -103,7 +101,6 @@ class DiagnosisResponse(DiagnosisBase):
 
 BeanCreate = PersonCreate
 BeanResponse = PersonResponse
-
 
 class SymptomDiseaseCreate(BaseModel):
     symptom: str
