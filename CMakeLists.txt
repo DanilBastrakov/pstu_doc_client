@@ -16,16 +16,22 @@ find_package(Qt5 COMPONENTS
 
 add_executable(pstu_doc_client
         main.cpp
-        authdialog.h
-        authdialog.cpp
+        api_client.h
+        api_client.cpp
+        dialogs/authdialog.h
+        dialogs/authdialog.cpp
+        widgets/chatwidget.h
+        widgets/chatwidget.cpp
         mainwindow.h
         mainwindow.cpp
-        collapsiblepanel.h
-        collapsiblepanel.cpp
-        persondialog.h
-        persondialog.cpp
-        sharedialog.h
-        sharedialog.cpp)
+        widgets/collapsiblepanel.h
+        widgets/collapsiblepanel.cpp
+        widgets/personswidget.h
+        widgets/personswidget.cpp
+        dialogs/persondialog.h
+        dialogs/persondialog.cpp
+        dialogs/sharedialog.h
+        dialogs/sharedialog.cpp)
 target_link_libraries(pstu_doc_client
         Qt5::Core
         Qt5::Gui

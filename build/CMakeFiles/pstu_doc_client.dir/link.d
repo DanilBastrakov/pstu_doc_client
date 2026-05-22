@@ -4,11 +4,14 @@ pstu_doc_client: \
   /usr/lib/gcc/x86_64-linux-gnu/14/crtbeginS.o \
   CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o \
   CMakeFiles/pstu_doc_client.dir/main.cpp.o \
-  CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/api_client.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/dialogs/authdialog.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/widgets/chatwidget.cpp.o \
   CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o \
-  CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o \
-  CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o \
-  CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/widgets/collapsiblepanel.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/widgets/personswidget.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/dialogs/persondialog.cpp.o \
+  CMakeFiles/pstu_doc_client.dir/dialogs/sharedialog.cpp.o \
   /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.15 \
   /usr/lib/x86_64-linux-gnu/libQt5Network.so.5.15.15 \
   /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.15 \
@@ -124,15 +127,21 @@ CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.o:
 
 CMakeFiles/pstu_doc_client.dir/main.cpp.o:
 
-CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o:
+CMakeFiles/pstu_doc_client.dir/api_client.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/dialogs/authdialog.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/widgets/chatwidget.cpp.o:
 
 CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.o:
 
-CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o:
+CMakeFiles/pstu_doc_client.dir/widgets/collapsiblepanel.cpp.o:
 
-CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o:
+CMakeFiles/pstu_doc_client.dir/widgets/personswidget.cpp.o:
 
-CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o:
+CMakeFiles/pstu_doc_client.dir/dialogs/persondialog.cpp.o:
+
+CMakeFiles/pstu_doc_client.dir/dialogs/sharedialog.cpp.o:
 
 /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.15:
 

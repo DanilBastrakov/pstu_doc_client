@@ -7,11 +7,11 @@
 	"CMAKE_LIST_FILES" : 
 	[
 		"/home/admin-debian/CLionProjects/pstu_doc_client/CMakeLists.txt",
-		"/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.2/CMakeSystem.cmake",
+		"/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.3/CMakeSystem.cmake",
 		"/snap/cmake/current/share/cmake-4.3/Modules/CMakeSystemSpecificInitialize.cmake",
 		"/snap/cmake/current/share/cmake-4.3/Modules/Platform/Linux-Initialize.cmake",
-		"/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.2/CMakeCCompiler.cmake",
-		"/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.2/CMakeCXXCompiler.cmake",
+		"/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.3/CMakeCCompiler.cmake",
+		"/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.3/CMakeCXXCompiler.cmake",
 		"/snap/cmake/current/share/cmake-4.3/Modules/CMakeSystemSpecificInformation.cmake",
 		"/snap/cmake/current/share/cmake-4.3/Modules/CMakeGenericSystem.cmake",
 		"/snap/cmake/current/share/cmake-4.3/Modules/CMakeInitializeConfigs.cmake",
@@ -99,15 +99,27 @@
 	"HEADERS" : 
 	[
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/authdialog.h",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/api_client.h",
 			"MU",
-			"EWIEGA46WW/moc_authdialog.cpp",
+			"EWIEGA46WW/moc_api_client.cpp",
 			null
 		],
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.h",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/dialogs/authdialog.h",
 			"MU",
-			"EWIEGA46WW/moc_collapsiblepanel.cpp",
+			"2NRMJ5X7RK/moc_authdialog.cpp",
+			null
+		],
+		[
+			"/home/admin-debian/CLionProjects/pstu_doc_client/dialogs/persondialog.h",
+			"MU",
+			"2NRMJ5X7RK/moc_persondialog.cpp",
+			null
+		],
+		[
+			"/home/admin-debian/CLionProjects/pstu_doc_client/dialogs/sharedialog.h",
+			"MU",
+			"2NRMJ5X7RK/moc_sharedialog.cpp",
 			null
 		],
 		[
@@ -117,29 +129,28 @@
 			null
 		],
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/persondialog.h",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/widgets/chatwidget.h",
 			"MU",
-			"EWIEGA46WW/moc_persondialog.cpp",
+			"IMAN36LHMA/moc_chatwidget.cpp",
 			null
 		],
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.h",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/widgets/collapsiblepanel.h",
 			"MU",
-			"EWIEGA46WW/moc_sharedialog.cpp",
+			"IMAN36LHMA/moc_collapsiblepanel.cpp",
+			null
+		],
+		[
+			"/home/admin-debian/CLionProjects/pstu_doc_client/widgets/personswidget.h",
+			"MU",
+			"IMAN36LHMA/moc_personswidget.cpp",
 			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : 
-	[
-		"QT_CORE_LIB",
-		"QT_GUI_LIB",
-		"QT_NETWORK_LIB",
-		"QT_NO_DEBUG",
-		"QT_WIDGETS_LIB"
-	],
+	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_NETWORK_LIB", "QT_WIDGETS_LIB" ],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -189,12 +200,22 @@
 	"SOURCES" : 
 	[
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/api_client.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/dialogs/authdialog.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/admin-debian/CLionProjects/pstu_doc_client/dialogs/persondialog.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/admin-debian/CLionProjects/pstu_doc_client/dialogs/sharedialog.cpp",
 			"MU",
 			null
 		],
@@ -209,12 +230,17 @@
 			null
 		],
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/widgets/chatwidget.cpp",
 			"MU",
 			null
 		],
 		[
-			"/home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp",
+			"/home/admin-debian/CLionProjects/pstu_doc_client/widgets/collapsiblepanel.cpp",
+			"MU",
+			null
+		],
+		[
+			"/home/admin-debian/CLionProjects/pstu_doc_client/widgets/personswidget.cpp",
 			"MU",
 			null
 		]

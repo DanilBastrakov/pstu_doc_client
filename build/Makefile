@@ -175,53 +175,101 @@ pstu_doc_client_autogen/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client_autogen.dir/build.make CMakeFiles/pstu_doc_client_autogen.dir/build
 .PHONY : pstu_doc_client_autogen/fast
 
-authdialog.o: authdialog.cpp.o
-.PHONY : authdialog.o
+api_client.o: api_client.cpp.o
+.PHONY : api_client.o
 
 # target to build an object file
-authdialog.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/authdialog.cpp.o
-.PHONY : authdialog.cpp.o
+api_client.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/api_client.cpp.o
+.PHONY : api_client.cpp.o
 
-authdialog.i: authdialog.cpp.i
-.PHONY : authdialog.i
+api_client.i: api_client.cpp.i
+.PHONY : api_client.i
 
 # target to preprocess a source file
-authdialog.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/authdialog.cpp.i
-.PHONY : authdialog.cpp.i
+api_client.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/api_client.cpp.i
+.PHONY : api_client.cpp.i
 
-authdialog.s: authdialog.cpp.s
-.PHONY : authdialog.s
+api_client.s: api_client.cpp.s
+.PHONY : api_client.s
 
 # target to generate assembly for a file
-authdialog.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/authdialog.cpp.s
-.PHONY : authdialog.cpp.s
+api_client.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/api_client.cpp.s
+.PHONY : api_client.cpp.s
 
-collapsiblepanel.o: collapsiblepanel.cpp.o
-.PHONY : collapsiblepanel.o
+dialogs/authdialog.o: dialogs/authdialog.cpp.o
+.PHONY : dialogs/authdialog.o
 
 # target to build an object file
-collapsiblepanel.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.o
-.PHONY : collapsiblepanel.cpp.o
+dialogs/authdialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/authdialog.cpp.o
+.PHONY : dialogs/authdialog.cpp.o
 
-collapsiblepanel.i: collapsiblepanel.cpp.i
-.PHONY : collapsiblepanel.i
+dialogs/authdialog.i: dialogs/authdialog.cpp.i
+.PHONY : dialogs/authdialog.i
 
 # target to preprocess a source file
-collapsiblepanel.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.i
-.PHONY : collapsiblepanel.cpp.i
+dialogs/authdialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/authdialog.cpp.i
+.PHONY : dialogs/authdialog.cpp.i
 
-collapsiblepanel.s: collapsiblepanel.cpp.s
-.PHONY : collapsiblepanel.s
+dialogs/authdialog.s: dialogs/authdialog.cpp.s
+.PHONY : dialogs/authdialog.s
 
 # target to generate assembly for a file
-collapsiblepanel.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/collapsiblepanel.cpp.s
-.PHONY : collapsiblepanel.cpp.s
+dialogs/authdialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/authdialog.cpp.s
+.PHONY : dialogs/authdialog.cpp.s
+
+dialogs/persondialog.o: dialogs/persondialog.cpp.o
+.PHONY : dialogs/persondialog.o
+
+# target to build an object file
+dialogs/persondialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/persondialog.cpp.o
+.PHONY : dialogs/persondialog.cpp.o
+
+dialogs/persondialog.i: dialogs/persondialog.cpp.i
+.PHONY : dialogs/persondialog.i
+
+# target to preprocess a source file
+dialogs/persondialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/persondialog.cpp.i
+.PHONY : dialogs/persondialog.cpp.i
+
+dialogs/persondialog.s: dialogs/persondialog.cpp.s
+.PHONY : dialogs/persondialog.s
+
+# target to generate assembly for a file
+dialogs/persondialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/persondialog.cpp.s
+.PHONY : dialogs/persondialog.cpp.s
+
+dialogs/sharedialog.o: dialogs/sharedialog.cpp.o
+.PHONY : dialogs/sharedialog.o
+
+# target to build an object file
+dialogs/sharedialog.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/sharedialog.cpp.o
+.PHONY : dialogs/sharedialog.cpp.o
+
+dialogs/sharedialog.i: dialogs/sharedialog.cpp.i
+.PHONY : dialogs/sharedialog.i
+
+# target to preprocess a source file
+dialogs/sharedialog.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/sharedialog.cpp.i
+.PHONY : dialogs/sharedialog.cpp.i
+
+dialogs/sharedialog.s: dialogs/sharedialog.cpp.s
+.PHONY : dialogs/sharedialog.s
+
+# target to generate assembly for a file
+dialogs/sharedialog.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/dialogs/sharedialog.cpp.s
+.PHONY : dialogs/sharedialog.cpp.s
 
 main.o: main.cpp.o
 .PHONY : main.o
@@ -271,30 +319,6 @@ mainwindow.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/mainwindow.cpp.s
 .PHONY : mainwindow.cpp.s
 
-persondialog.o: persondialog.cpp.o
-.PHONY : persondialog.o
-
-# target to build an object file
-persondialog.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/persondialog.cpp.o
-.PHONY : persondialog.cpp.o
-
-persondialog.i: persondialog.cpp.i
-.PHONY : persondialog.i
-
-# target to preprocess a source file
-persondialog.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/persondialog.cpp.i
-.PHONY : persondialog.cpp.i
-
-persondialog.s: persondialog.cpp.s
-.PHONY : persondialog.s
-
-# target to generate assembly for a file
-persondialog.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/persondialog.cpp.s
-.PHONY : persondialog.cpp.s
-
 pstu_doc_client_autogen/mocs_compilation.o: pstu_doc_client_autogen/mocs_compilation.cpp.o
 .PHONY : pstu_doc_client_autogen/mocs_compilation.o
 
@@ -319,29 +343,77 @@ pstu_doc_client_autogen/mocs_compilation.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/pstu_doc_client_autogen/mocs_compilation.cpp.s
 .PHONY : pstu_doc_client_autogen/mocs_compilation.cpp.s
 
-sharedialog.o: sharedialog.cpp.o
-.PHONY : sharedialog.o
+widgets/chatwidget.o: widgets/chatwidget.cpp.o
+.PHONY : widgets/chatwidget.o
 
 # target to build an object file
-sharedialog.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.o
-.PHONY : sharedialog.cpp.o
+widgets/chatwidget.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/chatwidget.cpp.o
+.PHONY : widgets/chatwidget.cpp.o
 
-sharedialog.i: sharedialog.cpp.i
-.PHONY : sharedialog.i
+widgets/chatwidget.i: widgets/chatwidget.cpp.i
+.PHONY : widgets/chatwidget.i
 
 # target to preprocess a source file
-sharedialog.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.i
-.PHONY : sharedialog.cpp.i
+widgets/chatwidget.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/chatwidget.cpp.i
+.PHONY : widgets/chatwidget.cpp.i
 
-sharedialog.s: sharedialog.cpp.s
-.PHONY : sharedialog.s
+widgets/chatwidget.s: widgets/chatwidget.cpp.s
+.PHONY : widgets/chatwidget.s
 
 # target to generate assembly for a file
-sharedialog.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/sharedialog.cpp.s
-.PHONY : sharedialog.cpp.s
+widgets/chatwidget.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/chatwidget.cpp.s
+.PHONY : widgets/chatwidget.cpp.s
+
+widgets/collapsiblepanel.o: widgets/collapsiblepanel.cpp.o
+.PHONY : widgets/collapsiblepanel.o
+
+# target to build an object file
+widgets/collapsiblepanel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/collapsiblepanel.cpp.o
+.PHONY : widgets/collapsiblepanel.cpp.o
+
+widgets/collapsiblepanel.i: widgets/collapsiblepanel.cpp.i
+.PHONY : widgets/collapsiblepanel.i
+
+# target to preprocess a source file
+widgets/collapsiblepanel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/collapsiblepanel.cpp.i
+.PHONY : widgets/collapsiblepanel.cpp.i
+
+widgets/collapsiblepanel.s: widgets/collapsiblepanel.cpp.s
+.PHONY : widgets/collapsiblepanel.s
+
+# target to generate assembly for a file
+widgets/collapsiblepanel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/collapsiblepanel.cpp.s
+.PHONY : widgets/collapsiblepanel.cpp.s
+
+widgets/personswidget.o: widgets/personswidget.cpp.o
+.PHONY : widgets/personswidget.o
+
+# target to build an object file
+widgets/personswidget.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/personswidget.cpp.o
+.PHONY : widgets/personswidget.cpp.o
+
+widgets/personswidget.i: widgets/personswidget.cpp.i
+.PHONY : widgets/personswidget.i
+
+# target to preprocess a source file
+widgets/personswidget.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/personswidget.cpp.i
+.PHONY : widgets/personswidget.cpp.i
+
+widgets/personswidget.s: widgets/personswidget.cpp.s
+.PHONY : widgets/personswidget.s
+
+# target to generate assembly for a file
+widgets/personswidget.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/pstu_doc_client.dir/build.make CMakeFiles/pstu_doc_client.dir/widgets/personswidget.cpp.s
+.PHONY : widgets/personswidget.cpp.s
 
 # Help Target
 help:
@@ -356,27 +428,36 @@ help:
 	@echo "... pstu_doc_client_autogen_timestamp_deps"
 	@echo "... update_style"
 	@echo "... pstu_doc_client"
-	@echo "... authdialog.o"
-	@echo "... authdialog.i"
-	@echo "... authdialog.s"
-	@echo "... collapsiblepanel.o"
-	@echo "... collapsiblepanel.i"
-	@echo "... collapsiblepanel.s"
+	@echo "... api_client.o"
+	@echo "... api_client.i"
+	@echo "... api_client.s"
+	@echo "... dialogs/authdialog.o"
+	@echo "... dialogs/authdialog.i"
+	@echo "... dialogs/authdialog.s"
+	@echo "... dialogs/persondialog.o"
+	@echo "... dialogs/persondialog.i"
+	@echo "... dialogs/persondialog.s"
+	@echo "... dialogs/sharedialog.o"
+	@echo "... dialogs/sharedialog.i"
+	@echo "... dialogs/sharedialog.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
 	@echo "... mainwindow.o"
 	@echo "... mainwindow.i"
 	@echo "... mainwindow.s"
-	@echo "... persondialog.o"
-	@echo "... persondialog.i"
-	@echo "... persondialog.s"
 	@echo "... pstu_doc_client_autogen/mocs_compilation.o"
 	@echo "... pstu_doc_client_autogen/mocs_compilation.i"
 	@echo "... pstu_doc_client_autogen/mocs_compilation.s"
-	@echo "... sharedialog.o"
-	@echo "... sharedialog.i"
-	@echo "... sharedialog.s"
+	@echo "... widgets/chatwidget.o"
+	@echo "... widgets/chatwidget.i"
+	@echo "... widgets/chatwidget.s"
+	@echo "... widgets/collapsiblepanel.o"
+	@echo "... widgets/collapsiblepanel.i"
+	@echo "... widgets/collapsiblepanel.s"
+	@echo "... widgets/personswidget.o"
+	@echo "... widgets/personswidget.i"
+	@echo "... widgets/personswidget.s"
 .PHONY : help
 
 

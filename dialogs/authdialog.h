@@ -1,0 +1,35 @@
+#ifndef AUTHDIALOG_H
+#define AUTHDIALOG_H
+
+#include <QDialog>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+
+class ApiClient;
+
+class AuthDialog : public QDialog {
+    Q_OBJECT
+public:
+    explicit AuthDialog(ApiClient *api, QWidget *parent = nullptr);
+
+private slots:
+    void onLoginClicked();
+    void onRegisterClicked();
+    void onToggleMode();
+
+private:
+    void setupUi();
+
+    ApiClient *m_api;
+    QLineEdit *m_usernameEdit;
+    QLineEdit *m_passwordEdit;
+    QPushButton *m_loginBtn;
+    QPushButton *m_registerBtn;
+    QPushButton *m_toggleBtn;
+    QLabel *m_statusLabel;
+    QWidget *m_registerFields;
+    bool m_isRegisterMode = false;
+};
+
+#endif

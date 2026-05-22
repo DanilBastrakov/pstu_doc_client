@@ -3,21 +3,27 @@
 
 /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/timestamp
  /home/admin-debian/CLionProjects/pstu_doc_client/CMakeLists.txt
- /home/admin-debian/CLionProjects/pstu_doc_client/authdialog.cpp
- /home/admin-debian/CLionProjects/pstu_doc_client/authdialog.h
- /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.2/CMakeCCompiler.cmake
- /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.2/CMakeCXXCompiler.cmake
- /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.2/CMakeSystem.cmake
+ /home/admin-debian/CLionProjects/pstu_doc_client/api_client.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/api_client.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.3/CMakeCCompiler.cmake
+ /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.3/CMakeCXXCompiler.cmake
+ /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/4.3.3/CMakeSystem.cmake
  /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/moc_predefs.h
- /home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.cpp
- /home/admin-debian/CLionProjects/pstu_doc_client/collapsiblepanel.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/dialogs/authdialog.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/dialogs/authdialog.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/dialogs/persondialog.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/dialogs/persondialog.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/dialogs/sharedialog.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/dialogs/sharedialog.h
  /home/admin-debian/CLionProjects/pstu_doc_client/main.cpp
  /home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.cpp
  /home/admin-debian/CLionProjects/pstu_doc_client/mainwindow.h
- /home/admin-debian/CLionProjects/pstu_doc_client/persondialog.cpp
- /home/admin-debian/CLionProjects/pstu_doc_client/persondialog.h
- /home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.cpp
- /home/admin-debian/CLionProjects/pstu_doc_client/sharedialog.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/widgets/chatwidget.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/widgets/chatwidget.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/widgets/collapsiblepanel.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/widgets/collapsiblepanel.h
+ /home/admin-debian/CLionProjects/pstu_doc_client/widgets/personswidget.cpp
+ /home/admin-debian/CLionProjects/pstu_doc_client/widgets/personswidget.h
  /snap/cmake/current/bin/cmake
  /snap/cmake/current/share/cmake-4.3/Modules/CMakeCInformation.cmake
  /snap/cmake/current/share/cmake-4.3/Modules/CMakeCXXInformation.cmake
@@ -302,6 +308,7 @@
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h
  /usr/include/x86_64-linux-gnu/gnu/stubs.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QFlags
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QJsonDocument
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QJsonObject
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType
  /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject
@@ -341,6 +348,7 @@
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qiodevice.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qiterator.h
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsondocument.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonobject.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qjsonvalue.h
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qline.h

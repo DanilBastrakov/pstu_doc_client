@@ -72,7 +72,7 @@ pstu_doc_client_autogen/timestamp: /usr/lib/qt5/bin/moc
 pstu_doc_client_autogen/timestamp: /usr/lib/qt5/bin/uic
 pstu_doc_client_autogen/timestamp: CMakeFiles/pstu_doc_client_autogen.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --blue --bold --progress-dir=/home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Automatic MOC and UIC for target pstu_doc_client"
-	/snap/cmake/current/bin/cmake -E cmake_autogen /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/pstu_doc_client_autogen.dir/AutogenInfo.json ""
+	/snap/cmake/current/bin/cmake -E cmake_autogen /home/admin-debian/CLionProjects/pstu_doc_client/build/CMakeFiles/pstu_doc_client_autogen.dir/AutogenInfo.json Debug
 	/snap/cmake/current/bin/cmake -E touch /home/admin-debian/CLionProjects/pstu_doc_client/build/pstu_doc_client_autogen/timestamp
 
 CMakeFiles/pstu_doc_client_autogen.dir/codegen:

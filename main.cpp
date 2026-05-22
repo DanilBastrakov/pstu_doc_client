@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QFile>
 #include "api_client.h"
-#include "authdialog.h"
+#include "dialogs/authdialog.h"
 #include "mainwindow.h"
 
 int main(int argc, char *argv[]) {

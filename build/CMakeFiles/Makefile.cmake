@@ -8,9 +8,9 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
   "/home/admin-debian/CLionProjects/pstu_doc_client/CMakeLists.txt"
-  "CMakeFiles/4.3.2/CMakeCCompiler.cmake"
-  "CMakeFiles/4.3.2/CMakeCXXCompiler.cmake"
-  "CMakeFiles/4.3.2/CMakeSystem.cmake"
+  "CMakeFiles/4.3.3/CMakeCCompiler.cmake"
+  "CMakeFiles/4.3.3/CMakeCXXCompiler.cmake"
+  "CMakeFiles/4.3.3/CMakeSystem.cmake"
   "/snap/cmake/current/share/cmake-4.3/Modules/CMakeCInformation.cmake"
   "/snap/cmake/current/share/cmake-4.3/Modules/CMakeCXXInformation.cmake"
   "/snap/cmake/current/share/cmake-4.3/Modules/CMakeCommonLanguageInclude.cmake"

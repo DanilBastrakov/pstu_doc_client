@@ -15,6 +15,11 @@ struct ApiResult {
     QString error;
 };
 
+struct StreamResult {
+    bool ok = false;
+    QString error;
+};
+
 class ApiClient : public QObject {
     Q_OBJECT
 public:
@@ -36,8 +41,10 @@ public:
     void remove(const QString &path,
                 std::function<void(const ApiResult &)> callback,
                 bool auth = true);
-
-    QNetworkReply* postStream(const QString &path, const QJsonObject &body);
+    void postStream(const QString &path, const QJsonObject &body,
+                    std::function<void(const QString &chunk)> onChunk,
+                    std::function<void(const StreamResult &)> onComplete,
+                    std::function<bool()> alive = nullptr);
 
 private:
     QNetworkReply* makeRequest(const QString &method, const QString &path,
