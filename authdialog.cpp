@@ -1,25 +1,18 @@
 #include "authdialog.h"
+#include "api_client.h"
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QUrl>
 
-// временный хардкод, т.к. денег на VPS нету...
-static const QString BASE_URL = "http://localhost:8000";
-
-AuthDialog::AuthDialog(QWidget *parent)
+AuthDialog::AuthDialog(ApiClient *api, QWidget *parent)
     : QDialog(parent)
-    , m_nam(new QNetworkAccessManager(this))
+    , m_api(api)
 {
     setWindowTitle(QString::fromUtf8("Вход"));
     setFixedSize(400, 350);
     setupUi();
 }
-
-QString AuthDialog::token() const { return m_token; }
 
 void AuthDialog::setupUi() {
     auto *layout = new QVBoxLayout(this);
@@ -95,30 +88,19 @@ void AuthDialog::onLoginClicked() {
     m_statusLabel->setText(QString::fromUtf8("Выполняется вход..."));
     m_statusLabel->setStyleSheet("color: gray;");
 
-    QUrl url(BASE_URL + "/api/auth/login");
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     QJsonObject body;
     body["username"] = username;
     body["password"] = password;
 
-    QNetworkReply *reply = m_nam->post(req, QJsonDocument(body).toJson());
-    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
-        reply->deleteLater();
-        QByteArray data = reply->readAll();
-        if (reply->error() != QNetworkReply::NoError) {
-            QJsonObject err = QJsonDocument::fromJson(data).object();
-            QString msg = err.value("detail").toString();
-            if (msg.isEmpty()) msg = reply->errorString();
-            m_statusLabel->setText(msg);
+    m_api->post("/api/auth/login", body, [this](const ApiResult &r) {
+        if (!r.ok) {
+            m_statusLabel->setText(r.error);
             m_statusLabel->setStyleSheet("color: red;");
             return;
         }
-        QJsonObject resp = QJsonDocument::fromJson(data).object();
-        m_token = resp.value("access_token").toString();
+        m_api->setToken(r.data.object().value("access_token").toString());
         accept();
-    });
+    }, false);
 }
 
 void AuthDialog::onRegisterClicked() {
@@ -134,26 +116,16 @@ void AuthDialog::onRegisterClicked() {
     m_statusLabel->setText(QString::fromUtf8("Выполняется регистрация..."));
     m_statusLabel->setStyleSheet("color: gray;");
 
-    QUrl url(BASE_URL + "/api/auth/register");
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-
     QJsonObject body;
     body["username"] = username;
     body["password"] = password;
 
-    QNetworkReply *reply = m_nam->post(req, QJsonDocument(body).toJson());
-    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
-        reply->deleteLater();
-        QByteArray data = reply->readAll();
-        if (reply->error() != QNetworkReply::NoError) {
-            QJsonObject err = QJsonDocument::fromJson(data).object();
-            QString msg = err.value("detail").toString();
-            if (msg.isEmpty()) msg = reply->errorString();
-            m_statusLabel->setText(msg);
+    m_api->post("/api/auth/register", body, [this](const ApiResult &r) {
+        if (!r.ok) {
+            m_statusLabel->setText(r.error);
             m_statusLabel->setStyleSheet("color: red;");
             return;
         }
         onLoginClicked();
-    });
+    }, false);
 }

@@ -4,13 +4,14 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QLabel>
-#include <QNetworkAccessManager>
+
+class ApiClient;
 
 class ShareDialog : public QDialog {
     Q_OBJECT
 public:
     ShareDialog(int personId, const QString &personName,
-                const QString &token, QWidget *parent = nullptr);
+                ApiClient *api, QWidget *parent = nullptr);
 
 private slots:
     void onShareClicked();
@@ -20,8 +21,7 @@ private:
 
     int m_personId;
     QString m_personName;
-    QString m_token;
-    QNetworkAccessManager *m_nam;
+    ApiClient *m_api;
 
     QLineEdit *m_userIdInput;
     QLabel *m_statusLabel;

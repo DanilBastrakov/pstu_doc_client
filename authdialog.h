@@ -5,13 +5,13 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
-#include <QNetworkAccessManager>
+
+class ApiClient;
 
 class AuthDialog : public QDialog {
     Q_OBJECT
 public:
-    explicit AuthDialog(QWidget *parent = nullptr);
-    QString token() const;
+    explicit AuthDialog(ApiClient *api, QWidget *parent = nullptr);
 
 private slots:
     void onLoginClicked();
@@ -21,6 +21,7 @@ private slots:
 private:
     void setupUi();
 
+    ApiClient *m_api;
     QLineEdit *m_usernameEdit;
     QLineEdit *m_passwordEdit;
     QLineEdit *m_emailEdit;
@@ -30,9 +31,6 @@ private:
     QPushButton *m_toggleBtn;
     QLabel *m_statusLabel;
     QWidget *m_registerFields;
-
-    QNetworkAccessManager *m_nam;
-    QString m_token;
     bool m_isRegisterMode = false;
 };
 

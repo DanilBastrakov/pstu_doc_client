@@ -3,6 +3,7 @@
 #include "collapsiblepanel.h"
 #include "persondialog.h"
 #include "sharedialog.h"
+#include "api_client.h"
 #include <QSplitter>
 #include <QScrollArea>
 #include <QLabel>
@@ -10,23 +11,15 @@
 #include <QWidget>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QUrl>
-#include <QUrlQuery>
 #include <QMessageBox>
 #include <QHBoxLayout>
-#include <QJsonArray>
 #include <QScrollBar>
 
-// временный хардкод, т.к. денег на VPS нету...
-static const QString BASE_URL = "http://localhost:8000";
-
-MainWindow::MainWindow(const QString &token, QWidget *parent)
-    : QMainWindow(parent), m_token(token)
+MainWindow::MainWindow(ApiClient *api, QWidget *parent)
+    : QMainWindow(parent), m_api(api)
 {
-    m_nam.setParent(this);
-
     setWindowTitle("MedDoc AI");
     resize(900, 600);
 
@@ -128,12 +121,10 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 
     setCentralWidget(splitter);
 
-    // Connections
     connect(logoutBtn, &QPushButton::clicked, this, [this]() {
         hide();
-        AuthDialog dialog;
+        AuthDialog dialog(m_api);
         if (dialog.exec() == QDialog::Accepted) {
-            m_token = dialog.token();
             m_currentPersonId = -1;
             clearChatDisplay();
             m_inputBar->setEnabled(false);
@@ -157,11 +148,8 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
     m_refreshTimer->start(60000);
 }
 
-QString MainWindow::token() const { return m_token; }
-void MainWindow::setToken(const QString &token) { m_token = token; }
-
 void MainWindow::onAddPersonClicked() {
-    PersonDialog dialog(m_token, this);
+    PersonDialog dialog(m_api, this);
     if (dialog.exec() == QDialog::Accepted)
         loadPersons();
 }
@@ -169,18 +157,10 @@ void MainWindow::onAddPersonClicked() {
 void MainWindow::loadPersons() {
     int prevPersonId = m_currentPersonId;
 
-    QUrl url(BASE_URL + "/api/db/persons");
-    QNetworkRequest req(url);
-    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
+    m_api->get("/api/db/persons", [this, prevPersonId](const ApiResult &r) {
+        if (!r.ok) return;
 
-    QNetworkReply *reply = m_nam.get(req);
-    connect(reply, &QNetworkReply::finished, this, [this, reply, prevPersonId]() {
-        reply->deleteLater();
-        if (reply->error() != QNetworkReply::NoError)
-            return;
-
-        QByteArray data = reply->readAll();
-        QJsonArray arr = QJsonDocument::fromJson(data).array();
+        QJsonArray arr = r.data.array();
 
         m_personsList->blockSignals(true);
         m_personsList->clear();
@@ -221,15 +201,9 @@ void MainWindow::onRemovePersonClicked() {
     );
     if (reply != QMessageBox::Yes) return;
 
-    QUrl url(BASE_URL + QString("/api/db/persons/%1").arg(personId));
-    QNetworkRequest req(url);
-    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
-    QNetworkReply *replyNet = m_nam.deleteResource(req);
-    connect(replyNet, &QNetworkReply::finished, this, [this, replyNet, item]() {
-        replyNet->deleteLater();
-        if (replyNet->error() != QNetworkReply::NoError) {
-            QMessageBox::warning(this, QString::fromUtf8("Ошибка"), replyNet->errorString());
+    m_api->remove(QString("/api/db/persons/%1").arg(personId), [this, item](const ApiResult &r) {
+        if (!r.ok) {
+            QMessageBox::warning(this, QString::fromUtf8("Ошибка"), r.error);
             return;
         }
         delete item;
@@ -245,7 +219,7 @@ void MainWindow::onSharePersonClicked() {
     }
 
     int personId = item->data(Qt::UserRole).toInt();
-    ShareDialog dialog(personId, item->text(), m_token, this);
+    ShareDialog dialog(personId, item->text(), m_api, this);
     if (dialog.exec() == QDialog::Accepted) {
         QMessageBox::information(this, QString::fromUtf8("Успешно"),
                                  QString::fromUtf8("Пациент передан"));
@@ -262,21 +236,15 @@ void MainWindow::onRedactPersonClicked() {
 
     int personId = item->data(Qt::UserRole).toInt();
 
-    QUrl url(BASE_URL + QString("/api/db/persons/%1").arg(personId));
-    QNetworkRequest req(url);
-    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
-    QNetworkReply *reply = m_nam.get(req);
-    connect(reply, &QNetworkReply::finished, this, [this, reply, personId]() {
-        reply->deleteLater();
-        if (reply->error() != QNetworkReply::NoError) {
+    m_api->get(QString("/api/db/persons/%1").arg(personId), [this, personId](const ApiResult &r) {
+        if (!r.ok) {
             QMessageBox::warning(this, QString::fromUtf8("Ошибка"),
                                  QString::fromUtf8("Не удалось загрузить данные пациента"));
             return;
         }
 
-        QJsonObject obj = QJsonDocument::fromJson(reply->readAll()).object();
-        PersonDialog dialog(m_token, personId, obj, this);
+        QJsonObject obj = r.data.object();
+        PersonDialog dialog(m_api, personId, obj, this);
         if (dialog.exec() == QDialog::Accepted)
             loadPersons();
     });
@@ -394,21 +362,12 @@ void MainWindow::onPersonSelectionChanged(QListWidgetItem *current, QListWidgetI
     m_sendBtn->setEnabled(true);
     m_predictBtn->setEnabled(true);
 
-    // Fetch chat history for this person
-    QUrl url(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
-    QNetworkRequest req(url);
-    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
     int personId = m_currentPersonId;
-    QNetworkReply *reply = m_nam.get(req);
-    connect(reply, &QNetworkReply::finished, this, [this, reply, personId]() {
-        reply->deleteLater();
-        if (reply->error() != QNetworkReply::NoError)
-            return;
-        if (personId != m_currentPersonId)
-            return;
+    m_api->get(QString("/api/chat/%1").arg(personId), [this, personId](const ApiResult &r) {
+        if (!r.ok) return;
+        if (personId != m_currentPersonId) return;
 
-        QJsonArray arr = QJsonDocument::fromJson(reply->readAll()).array();
+        QJsonArray arr = r.data.array();
         for (const auto &val : arr) {
             QJsonObject obj = val.toObject();
             QString role = obj.value("role").toString();
@@ -427,20 +386,12 @@ void MainWindow::onSendClicked() {
     appendMessage(text, true);
     m_inputBar->clear();
 
-    QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
-    QNetworkRequest chatReq(chatUrl);
-    chatReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    chatReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
     QJsonObject chatBody;
     chatBody["role"] = "user";
     chatBody["content"] = text;
 
-    QNetworkReply *chatReply = m_nam.post(chatReq, QJsonDocument(chatBody).toJson(QJsonDocument::Compact));
-    connect(chatReply, &QNetworkReply::finished, this, [this, chatReply, text]() {
-        chatReply->deleteLater();
-        if (chatReply->error() != QNetworkReply::NoError)
-            return;
+    m_api->post(QString("/api/chat/%1").arg(m_currentPersonId), chatBody, [this, text](const ApiResult &r) {
+        if (!r.ok) return;
 
         QJsonObject body;
         body["prompt"] = text;
@@ -456,15 +407,10 @@ void MainWindow::onPredictClicked() {
 
     appendMessage(QString::fromUtf8("Запрос прогноза"), true);
 
-    QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
-    QNetworkRequest chatReq(chatUrl);
-    chatReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    chatReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
     QJsonObject chatBody;
     chatBody["role"] = "user";
     chatBody["content"] = QString::fromUtf8("Запрос прогноза");
-    QNetworkReply *chatReply = m_nam.post(chatReq, QJsonDocument(chatBody).toJson(QJsonDocument::Compact));
-    connect(chatReply, &QNetworkReply::finished, chatReply, &QNetworkReply::deleteLater);
+    m_api->post(QString("/api/chat/%1").arg(m_currentPersonId), chatBody, [](const ApiResult &) {});
 
     QJsonObject body;
     body["prompt"] = QString::fromUtf8("Запрос прогноза");
@@ -478,12 +424,7 @@ void MainWindow::startAiStream(const QString &path, const QJsonObject &body) {
     m_streamAccumulator.clear();
     m_streamPersonId = m_currentPersonId;
 
-    QUrl url(BASE_URL + path);
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
-    QNetworkReply *reply = m_nam.post(req, QJsonDocument(body).toJson(QJsonDocument::Compact));
+    QNetworkReply *reply = m_api->postStream(path, body);
 
     connect(reply, &QNetworkReply::readyRead, this, [this, reply]() {
         if (m_streamPersonId != m_currentPersonId) {
@@ -549,19 +490,12 @@ void MainWindow::startAiStream(const QString &path, const QJsonObject &body) {
             }
         }
         if (m_streamingBubble && !m_streamingBubble->text().isEmpty()) {
-            QUrl chatUrl(BASE_URL + QString("/api/chat/%1").arg(m_currentPersonId));
-            QNetworkRequest chatReq(chatUrl);
-            chatReq.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-            chatReq.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
             QJsonObject chatBody;
             chatBody["role"] = "assistant";
             chatBody["content"] = m_streamingBubble->text();
-            QNetworkReply *chatReply = m_nam.post(chatReq, QJsonDocument(chatBody).toJson(QJsonDocument::Compact));
-            connect(chatReply, &QNetworkReply::finished, chatReply, &QNetworkReply::deleteLater);
+            m_api->post(QString("/api/chat/%1").arg(m_currentPersonId), chatBody, [](const ApiResult &) {});
         }
         m_streamingBubble = nullptr;
         m_streamAccumulator.clear();
     });
 }
-
-

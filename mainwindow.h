@@ -5,7 +5,6 @@
 #include <QLineEdit>
 #include <QListWidget>
 #include <QVBoxLayout>
-#include <QNetworkAccessManager>
 #include <QTimer>
 #include <QScrollArea>
 #include <QPushButton>
@@ -14,13 +13,12 @@
 #include <QJsonObject>
 
 class CollapsiblePanel;
+class ApiClient;
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
-    explicit MainWindow(const QString &token, QWidget *parent = nullptr);
-    QString token() const;
-    void setToken(const QString &token);
+    explicit MainWindow(ApiClient *api, QWidget *parent = nullptr);
 
 private slots:
     void onAddPersonClicked();
@@ -32,17 +30,15 @@ private slots:
     void onPersonSelectionChanged(QListWidgetItem *current, QListWidgetItem *previous);
 
 private:
-    void setupUi();
     void loadPersons();
     void appendMessage(const QString &text, bool isUser);
     void clearChatDisplay();
     QLabel* createStreamingBubble();
     void startAiStream(const QString &path, const QJsonObject &body);
 
-    QString m_token;
+    ApiClient *m_api;
     int m_currentPersonId = -1;
     int button_spacing = 2;
-    QNetworkAccessManager m_nam;
 
     QLabel *m_streamingBubble = nullptr;
     QString m_streamAccumulator;

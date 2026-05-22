@@ -1,5 +1,6 @@
 #include <QApplication>
 #include <QFile>
+#include "api_client.h"
 #include "authdialog.h"
 #include "mainwindow.h"
 
@@ -12,11 +13,12 @@ int main(int argc, char *argv[]) {
         styleFile.close();
     }
 
-    AuthDialog authDialog;
+    ApiClient api;
+    AuthDialog authDialog(&api);
     if (authDialog.exec() != QDialog::Accepted)
         return 0;
 
-    MainWindow window(authDialog.token());
+    MainWindow window(&api);
     window.show();
 
     return app.exec();
