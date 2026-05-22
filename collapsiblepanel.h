@@ -9,7 +9,7 @@
 class CollapsiblePanel : public QWidget {
     Q_OBJECT
 public:
-    CollapsiblePanel(const QString &title, QPushButton button, QWidget *parent = nullptr);
+    CollapsiblePanel(const QString &title, QPushButton *button, QWidget *parent = nullptr);
 
     //CollapsiblePanel(const QString &title, QWidget button, QWidget *parent);
 

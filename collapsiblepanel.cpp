@@ -1,7 +1,7 @@
 #include "collapsiblepanel.h"
 #include <QHBoxLayout>
 
-CollapsiblePanel::CollapsiblePanel(const QString &title, QPushButton button, QWidget *parent)
+CollapsiblePanel::CollapsiblePanel(const QString &title, QPushButton *button, QWidget *parent)
     : QWidget(parent), m_title(title)
 {
     auto *mainLayout = new QVBoxLayout(this);
@@ -13,8 +13,8 @@ CollapsiblePanel::CollapsiblePanel(const QString &title, QPushButton button, QWi
     m_headerBtn = new QPushButton();
     m_headerBtn->setCursor(Qt::PointingHandCursor);
     hBox->addWidget(m_headerBtn);
-    hBox->setSpacing(10);
-    hBox->addWidget(&button);
+    hBox->setSpacing(2);
+    hBox->addWidget(button);
     mainLayout->addLayout(hBox);
 
     m_content = new QWidget();

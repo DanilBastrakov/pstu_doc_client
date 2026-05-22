@@ -40,8 +40,9 @@ MainWindow::MainWindow(const QString &token, QWidget *parent)
 
     auto *refreshPatientsBtn = new QPushButton(QString::fromUtf8("Обновить"));
     refreshPatientsBtn->setObjectName("refreshPatientBtn");
+    connect(refreshPatientsBtn, &QPushButton::clicked, this, &MainWindow::loadPersons);
 
-    m_personPanel = new CollapsiblePanel(QString::fromUtf8("Пациенты"), QPushButton(refreshPatientsBtn));
+    m_personPanel = new CollapsiblePanel(QString::fromUtf8("Пациенты"), refreshPatientsBtn);
     auto *personContent = new QVBoxLayout();
     personContent->setContentsMargins(0, 0, 0, 0);
 
