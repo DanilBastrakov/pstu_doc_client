@@ -1,32 +1,25 @@
 #include "persondialog.h"
+#include "api_client.h"
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QHBoxLayout>
-#include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QNetworkReply>
-#include <QNetworkRequest>
-#include <QUrl>
 #include <QScrollArea>
 #include <QMessageBox>
 
-// временный хардкод, т.к. денег на VPS нету...
-static const QString BASE_URL = "http://localhost:8000";
-
-PersonDialog::PersonDialog(const QString &token, QWidget *parent)
-    : QDialog(parent), m_token(token), m_nam(new QNetworkAccessManager(this))
+PersonDialog::PersonDialog(ApiClient *api, QWidget *parent)
+    : QDialog(parent), m_api(api)
 {
     setWindowTitle(QString::fromUtf8("Добавить пациента"));
     resize(500, 600);
     setupUi();
 }
 
-PersonDialog::PersonDialog(const QString &token, int personId, const QJsonObject &personData, QWidget *parent)
-    : QDialog(parent), m_token(token), m_nam(new QNetworkAccessManager(this)),
-      m_editMode(true), m_editPersonId(personId)
+PersonDialog::PersonDialog(ApiClient *api, int personId, const QJsonObject &personData, QWidget *parent)
+    : QDialog(parent), m_api(api), m_editMode(true), m_editPersonId(personId)
 {
     setWindowTitle(QString::fromUtf8("Редактировать пациента"));
     resize(500, 600);
@@ -264,34 +257,26 @@ void PersonDialog::onSaveClicked() {
     pastConditions["medications"] = medications;
     body["past_conditions"] = pastConditions;
 
-    QUrl url = m_editMode
-        ? QUrl(BASE_URL + QString("/api/db/persons/%1").arg(m_editPersonId))
-        : QUrl(BASE_URL + "/api/db/persons");
-    QNetworkRequest req(url);
-    req.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    req.setRawHeader("Authorization", ("Bearer " + m_token).toUtf8());
-
-    QNetworkReply *reply = m_editMode
-        ? m_nam->put(req, QJsonDocument(body).toJson())
-        : m_nam->post(req, QJsonDocument(body).toJson());
-    connect(reply, &QNetworkReply::finished, this, [this, reply]() {
-        reply->deleteLater();
-        QByteArray data = reply->readAll();
-        if (reply->error() != QNetworkReply::NoError) {
-            QJsonObject err = QJsonDocument::fromJson(data).object();
-            QString msg = err.value("detail").toString();
-            if (msg.isEmpty()) msg = reply->errorString();
-            m_statusLabel->setText(msg);
-            m_statusLabel->setStyleSheet("color: red;");
-            return;
-        }
-        if (m_editMode) {
+    if (m_editMode) {
+        m_api->put(QString("/api/db/persons/%1").arg(m_editPersonId), body, [this](const ApiResult &r) {
+            if (!r.ok) {
+                m_statusLabel->setText(r.error);
+                m_statusLabel->setStyleSheet("color: red;");
+                return;
+            }
             accept();
-        } else {
-            QJsonObject obj = QJsonDocument::fromJson(data).object();
+        });
+    } else {
+        m_api->post("/api/db/persons", body, [this](const ApiResult &r) {
+            if (!r.ok) {
+                m_statusLabel->setText(r.error);
+                m_statusLabel->setStyleSheet("color: red;");
+                return;
+            }
+            QJsonObject obj = r.data.object();
             m_createdPersonName = obj.value("name").toString();
             m_createdPersonId = obj.value("id").toInt();
             accept();
-        }
-    });
+        });
+    }
 }
